@@ -3,6 +3,8 @@
 <title>{{post.title_tag}}</title>
 {% endblock %}
 {% block content%}
+{% if user.is_authenticated %}
+
 <div class="form-group">
     <form method="POST">
         {% csrf_token %}
@@ -10,6 +12,9 @@
         <input type="submit" value="Submit">
     </form>
 </div>
+{% else %}
+<a href="{% url 'login' %}">Login</a>
 
+{% endif %}
 
 {% endblock %}

@@ -3,6 +3,8 @@
 <title>{{post.title_tag}}</title>
 {% endblock %}
 {% block content%}
+{% if user.is_authenticated %}
+
 <h1>Delete Post</h1>
 
 <h3>Delete: {{post.title}}</h3>
@@ -12,6 +14,9 @@
         <input type="submit" value="Delete Post">
     </form>
 </div>
+{% else %}
+<a href="{% url 'login' %}">Login</a>
 
+{% endif %}
 
 {% endblock %}

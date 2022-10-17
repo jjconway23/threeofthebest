@@ -4,16 +4,26 @@
 <meta name="keywords" content="HTML, CSS, JavaScript">
 <meta name="author" content="John Doe">
 <title>3 of the Best</title>
-{% endblock %} 
+{% endblock %}
 {% block content%}
 
 <h1>Hello World!</h1>
 <ul>
-{% for post in object_list %}
-    <li><a href="{% url 'post-details' post.pk %}">{{post.title}}</a>
-    {{post.author|capfirst}} - <a href="{% url 'update_post' post.pk%}">Update</a> <a href="{% url 'delete_post' post.pk%}">Delete</a><br>
-    {{post.body}}</li>
-{% endfor %}
+    {% for post in object_list %}
+    <li>
+        <a href="{% url 'post-details' post.pk %}">{{post.title}}</a>
+        {{post.author|capfirst}} - 
+        {% comment %}
+        {% if user.is_authenticated %}
+            <a href="{% url 'update_post' post.pk%}">Update</a> 
+            <a href="{% url 'delete_post' post.pk%}">Delete</a>
+        {% endif %}
+        {% endcomment %}
+
+        <br>
+        {{post.body|slice:":200"|safe}}
+    </li>
+    {% endfor %}
 </ul>
 <a href="{% url 'add_post' %}">Add Post</a>
 {% endblock %}

@@ -14,6 +14,6 @@ description meta tag too.
 <small>By: {{post.author.first_name}}</small>
 <small>{{post.author.last_name}}  - {{ post.post_date }} - <a href="{% url 'update_post' post.pk%}">Update</a> <a href="{% url 'delete_post' post.pk%}">Delete</a></small>
 <hr>
-<p>{{post.body}}</p>
+<p>{{post.body| safe}}</p>
 <a href="{% url 'home' %}">Back</a>
 {% endblock %}
