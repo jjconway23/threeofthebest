@@ -1,3 +1,4 @@
+from unicodedata import category
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from theblog.models import Category, Post
@@ -8,12 +9,24 @@ from django.urls import reverse_lazy
 class ListHomeView(ListView):
     model = Post
     template_name = 'home.html'
-    ordering = ['-post_date']
+    ordering = ['-id',]
+
+    def get_context_data(self, *args, **kwargs):
+        cat_menu = Category.objects.all()
+        context = super(ListHomeView, self).get_context_data(*args, **kwargs)
+        context["cat_menu"] = cat_menu
+        return context
 
 
 class DetailPostView(DetailView):
     model = Post
     template_name = 'blog_details.html'
+
+    def get_context_data(self, *args, **kwargs):
+        cat_menu = Category.objects.all()
+        context = super(DetailPostView, self).get_context_data(*args, **kwargs)
+        context["cat_menu"] = cat_menu
+        return context
 
 
 class CreatePostView(CreateView):
@@ -35,6 +48,15 @@ class DeletePostView(DeleteView):
 
 
 # Category Views
+
+def ListAllCategoriesView(request):
+    cat_menu_list = Category.objects.all()
+    return render(request, 'categories_list.html', {'cat_menu_list': cat_menu_list})
+
+def ListCategoryView(request, cats):
+    category_posts = Post.objects.filter(category=cats.replace("-", " "))
+    return render(request, 'categories.html', {'cats': cats.title().replace("-", " "), 'category_posts': category_posts})
+
 # class CreateCategoryView(CreateView):
 #     model = Category
 #     template_name = ''

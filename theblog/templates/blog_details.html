@@ -12,7 +12,15 @@ description meta tag too.
 {% block content%}
 <h1>{{post.title}}</h1>
 <small>By: {{post.author.first_name}}</small>
-<small>{{post.author.last_name}}  - {{ post.post_date }} - <a href="{% url 'update_post' post.pk%}">Update</a> <a href="{% url 'delete_post' post.pk%}">Delete</a></small>
+<small>{{post.author.last_name}}  - {{ post.post_date }}  
+    
+    {% if user.is_authenticated %}
+        {% if user.id == post.author.id %}
+            <a href="{% url 'update_post' post.pk%}">- Update</a> 
+            <a href="{% url 'delete_post' post.pk%}">Delete</a>
+        {% endif %}
+    {% endif %}
+</small>
 <hr>
 <p>{{post.body| safe}}</p>
 <a href="{% url 'home' %}">Back</a>

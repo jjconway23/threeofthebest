@@ -24,8 +24,26 @@
               <li><a href="{% url 'login' %}">Login</a></li>
               <li><a href="{% url 'register' %}">Register</a></li>
             {% endif %}
+            {% if cat_menu %}
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Categories
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                {% for cat in cat_menu %}
+                  <a class="dropdown-item" href="{% url 'category' cat|slugify %}">{{cat|title}}</a>
+                
+                {% endfor %}
 
-
+              </div>
+              {% else %}
+              <li>
+                <a href="{% url 'category_list' %}">
+                  Categories
+                </a>
+              
+            </li>
+            {% endif %}
   
           </ul>
       </nav>

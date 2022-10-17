@@ -4,15 +4,19 @@
 {% endblock %}
 {% block content%}
 {% if user.is_authenticated %}
-
-<div class="form-group">
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Submit">
-    </form>
-</div>
+    {% if user.id == post.author.id %}
+        <div class="form-group">
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+    {% else %}
+        <h3>You are not allowed to access this page</h3>
+    {% endif %}
 {% else %}
+
 <a href="{% url 'login' %}">Login</a>
 
 {% endif %}
