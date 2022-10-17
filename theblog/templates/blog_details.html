@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title%}
+<title>{{post.title_tag}}</title>
+{% comment %}
+<meta name="keywords" content="{{}}">
+see if there is a way where we can dynamically set meta tags.
+may be able to add a field to the Post model and have them looped
+thorugh and added to meta keywords. Potentially do it with the 
+description meta tag too.
+{% endcomment %}
+{% endblock %} 
+{% block content%}
+<h1>{{post.title}}</h1>
+<small>By: {{post.author.first_name}}</small>
+<small>{{post.author.last_name}}  - {{ post.post_date }} - <a href="{% url 'update_post' post.pk%}">Update</a> <a href="{% url 'delete_post' post.pk%}">Delete</a></small>
+<hr>
+<p>{{post.body}}</p>
+<a href="{% url 'home' %}">Back</a>
+{% endblock %}
