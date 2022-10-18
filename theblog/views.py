@@ -1,9 +1,9 @@
-from unicodedata import category
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from theblog.models import Category, Post
 from .forms import PostForm, UpdatePostForm
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
+from django.http import HttpResponseRedirect
 
 #Post Views
 class ListHomeView(ListView):
@@ -24,8 +24,18 @@ class DetailPostView(DetailView):
 
     def get_context_data(self, *args, **kwargs):
         cat_menu = Category.objects.all()
+
+        post_wanted = get_object_or_404(Post, id=self.kwargs['pk'])
+        total_likes = post_wanted.total_likes()
+        liked = False
+        if post_wanted.likes.filter(id=self.request.user.id).exists():
+            liked = True
+
+
         context = super(DetailPostView, self).get_context_data(*args, **kwargs)
         context["cat_menu"] = cat_menu
+        context["total_likes"] = total_likes
+        context['liked'] = liked
         return context
 
 
@@ -57,8 +67,16 @@ def ListCategoryView(request, cats):
     category_posts = Post.objects.filter(category=cats.replace("-", " "))
     return render(request, 'categories.html', {'cats': cats.title().replace("-", " "), 'category_posts': category_posts})
 
-# class CreateCategoryView(CreateView):
-#     model = Category
-#     template_name = ''
-#     fields = ('name')
-# template and url pattern not needed yet
+
+# Like Views
+
+def LikeView(request,pk):
+    post = get_object_or_404(Post, id=request.POST.get('post_id'))
+    liked = False
+    if post.likes.filter(id=request.user.id).exists():
+        post.likes.remove(request.user)
+        liked=False
+    else:
+        post.likes.add(request.user)
+        liked=True
+    return HttpResponseRedirect(reverse('post-details', args=[str(pk)]))

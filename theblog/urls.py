@@ -9,5 +9,6 @@ urlpatterns = [
     path('article/edit/<int:pk>', views.UpdatePostView.as_view(), name='update_post'),
     path('article/<int:pk>/remove', views.DeletePostView.as_view(), name='delete_post'),
     path('category/<str:cats>/',views.ListCategoryView,name='category'),
-    path('category-list/', views.ListAllCategoriesView, name='category_list')
+    path('category-list/', views.ListAllCategoriesView, name='category_list'),
+    path('like/<int:pk>', views.LikeView, name='like_post')
 ]
