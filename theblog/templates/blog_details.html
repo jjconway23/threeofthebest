@@ -60,6 +60,8 @@ description meta tag too.
           <h5 class="card-title">{{post.author.first_name}} {{post.author.last_name}}</h5>
           <p class="small text-muted">
 
+            <a href="{% url 'profile_page' post.author.profile.id %}">Profile</a> | 
+
             {% if post.author.profile.instagram_url %}
                 <a target="_blank" href="{{ post.author.profile.instagram_url }}">Instagram</a> | 
             {% endif %}

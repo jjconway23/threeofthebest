@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title%}
+<meta name="description" content="">
+<meta name="keywords" content="HTML, CSS, JavaScript">
+<meta name="author" content="John Doe">
+<title>3 of the Best</title>
+{% endblock %}
+{% block content%}
+
+<h1>User Profile</h1>
+<div class="card mb-3">
+    <div class="row no-gutters">
+      <div class="col-md-2">
+        {% if page_user.profile_pic %}
+            <img class="card-img" src="{{ page_user.profile_pic.url }}">
+        {% else %}
+            <img class="card-img" src="{% static 'theblog\images\default_profile_pic.png' %}">
+        {% endif %}
+
+      </div>
+      <div class="col-md-10">
+        <div class="card-body">
+          <h5 class="card-title">{{page_user.user.first_name}} {{page_user.user.last_name}}</h5>
+          <p class="small text-muted">
+
+
+
+            {% if page_user.instagram_url %}
+                <a target="_blank" href="{{ post.author.profile.instagram_url }}">Instagram</a> | 
+            {% endif %}
+
+            {% if page_user.facebook_url %}
+                <a target="_blank" href="{{ post.author.profile.facebook_url }}">Facebook</a> | 
+            {% endif %}
+
+            {% if page_user.twitter_url %}
+                <a target="_blank" href="{{ post.author.profile.twitter_url }}">Twitter</a> | 
+            {% endif %}
+
+            {% if page_user.tiktok_url %}
+                <a target="_blank" href="{{ post.author.profile.tiktok_url }}">TikTok</a> |
+            {% endif %}
+
+            {% if page_user.snapchat_url %}
+                <a target="_blank" href="{{ post.author.profile.snapchat_url }}">Snapchat</a> | 
+            {% endif %}
+
+            {% if page_user.youtube_url %}
+                <a target="_blank" href="{{ post.author.profile.youtube_url }}">Youtube</a> 
+            {% endif %}
+            (can use font awesome icons instead?)</p>
+          <p class="card-text">{{ page_user.bio }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
