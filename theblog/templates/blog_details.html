@@ -40,10 +40,24 @@ description meta tag too.
         {% endif %}
     {% else %}
         <a href="{% url 'login' %}">Login in to like</a> 
-    
+
     {% endif %}
 
     - {{total_likes}} Likes
+<br/><br/>
+
+<h2>Comments</h2>
+{% if not post.comments.all %}
+    No Comments Yet
+{% else %}
+
+    {% for comment in post.comments.all %}
+        <strong>{{ comment.name }} - {{ comment.date_added }}</strong><br>
+        {{ comment.body }}
+        <hr>
+    {% endfor %}    
+{% endif %}
+
 </form>
 <div class="card mb-3">
     <div class="row no-gutters">

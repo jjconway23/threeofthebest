@@ -23,7 +23,13 @@ class Profile(models.Model):
     snapchat_url = models.CharField(max_length=255, blank=True, null=True)
     youtube_url = models.CharField(max_length=255, blank=True, null=True)
 
-
+    def get_absolute_url(self):
+        """
+            When adding a new post, this function will direct them to
+            the newly added post. May not be used as do not intend to allow
+            users to create their own accounts to post a blog post.
+        """
+        return reverse('home')
 
 
     def __str__(self):
@@ -56,3 +62,14 @@ class Post(models.Model):
             users to create their own accounts to post a blog post.
         """
         return reverse('home')
+
+
+
+class Comment(models.Model):
+    post = models.ForeignKey(Post, related_name='comments', on_delete=models.CASCADE)
+    name = models.CharField(max_length=255)
+    body = models.TextField()
+    date_added = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.post.title} |  {self.name}"
