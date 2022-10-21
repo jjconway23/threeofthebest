@@ -4,6 +4,7 @@ from theblog.models import Category, Post, Comment
 from .forms import PostForm, UpdatePostForm, UpdateCommentForm
 from django.urls import reverse_lazy, reverse
 from django.http import HttpResponseRedirect
+import random
 
 #Post Views
 class ListHomeView(ListView):
@@ -13,8 +14,11 @@ class ListHomeView(ListView):
 
     def get_context_data(self, *args, **kwargs):
         cat_menu = Category.objects.all()
+        comments = Comment.objects.all()
+        home_comments = random.choices(comments, k=5)
         context = super(ListHomeView, self).get_context_data(*args, **kwargs)
         context["cat_menu"] = cat_menu
+        context["home_comments"] = home_comments
         return context
 
 

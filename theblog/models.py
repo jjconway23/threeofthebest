@@ -50,6 +50,7 @@ class Post(models.Model):
     title = models.CharField(max_length=255)
     title_tag = models.CharField(max_length=255, default='3oftheBest')
     header_image = models.ImageField(null=True, blank=True, upload_to="images/")
+    snippet_image = models.ImageField(null=True, blank=True, upload_to="snippet-image/")
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     body = models.TextField()
     post_date = models.DateField(auto_now_add=True)
@@ -61,7 +62,7 @@ class Post(models.Model):
 
     class Meta:
         """
-            This is to only allow one post with isFeatured property.
+            This is to only allow one post with isFeatured boolean field checked.
         """
         constraints = [
             UniqueConstraint(fields=['isFeatured'], condition=Q(isFeatured=True), name='isFeatured')
