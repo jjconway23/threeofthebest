@@ -6,14 +6,13 @@
 <title>3 of the Best</title>
 {% endblock %}
 {% block content%}
-
 <section class="bg-light py-5">
     <div class="container px-5">
         <div class="d-flex align-items-center justify-content-between">
-          <h6 class="mb-0">Featured Story</h6>
+          <h6 class="mb-0">Featured Post</h6>
           <div>
             <a class="text-arrow-icon small" href="#!">
-              More headlines
+              More Reviews
               <i data-feather="arrow-right"></i>
             </a>
           </div>
@@ -23,23 +22,24 @@
           <div class="card-body p-0">
             <div class="row g-0">
               <div class="col-lg-6 p-5">
+                
+                {% for post in object_list %}
+                    {% if post.isFeatured %}
                 <a
                   class="badge badge-marketing bg-primary-soft rounded-pill text-primary mb-3"
                   href="#!"
-                  >Web</a
+                  >{{post.category|title}}</a
                 >
-                <a class="text-dark" href="#!"
+                <a class="text-dark" href="{% url 'post-details' post.pk %}"
                   ><h1>
-                    News companies post headline about creating new
-                    websites with powerful UI kits
+                    {{post.title}}
                   </h1></a
                 >
                 <p>
-                  When creating and developing startups, using a UI kit to
-                  bootstrap your companies website can be an extremely
-                  efficient way to save time, money, and runway.
+                    {{post.snippet}}
+
                 </p>
-                <a class="text-arrow-icon small" href="#!">
+                <a class="text-arrow-icon small" href="{% url 'post-details' post.pk %}">
                   Read more
                   <i data-feather="arrow-right"></i>
                 </a>
@@ -47,14 +47,16 @@
               <div
                 class="col-lg-6 align-self-stretch bg-img-cover d-none d-lg-flex"
                 style="
-                  background-image: url('https://source.unsplash.com/npxXWgQ33ZQ/1200x800');
+                  background-image: url('{{post.header_image.url}}');
                 "
               ></div>
+              {% endif %}
+              {% endfor %}
             </div>
           </div>
         </div>
         <div class="d-flex align-items-center justify-content-between">
-          <h6 class="mb-0">Top Stories</h6>
+          <h6 class="mb-0">Latest Posts</h6>
           <div>
             <a class="text-arrow-icon small" href="#!">
               View more
@@ -65,22 +67,19 @@
         <hr class="mb-4" />
         <div class="row gx-5">
           <div class="col-lg-7 col-xl-8">
+            {% for post in object_list|slice:":3" %}
+
             <div class="d-flex">
               <div class="flex-grow-1">
-                <a class="text-dark" href="#!"
+                <a class="text-dark" href="{% url 'post-details' post.pk %}"
                   ><h5 class="mt-0">
-                    Is the Bootstrap framework the best way to build a
-                    mobile responsive website?
+                    {{post.title|title}}
                   </h5></a
                 >
                 <p>
-                  Cras sit amet nibh libero, in gravida nulla. Nulla vel
-                  metus scelerisque ante sollicitudin. Cras purus odio,
-                  vestibulum in vulputate at, tempus viverra turpis. Fusce
-                  condimentum nunc ac nisi vulputate fringilla. Donec
-                  lacinia congue felis in faucibus.
+                    {{ post.snippet }}
                 </p>
-                <a class="text-arrow-icon small" href="#!">
+                <a class="text-arrow-icon small" href="{% url 'post-details' post.pk %}">
                   Read more
                   <i data-feather="arrow-right"></i>
                 </a>
@@ -88,68 +87,17 @@
               <div class="flex-shrink-0 ms-4">
                 <img
                   class="align-self-start rounded shadow media-img"
-                  src="https://source.unsplash.com/4hbJ-eymZ1o/160x160"
+                  src="{{ post.header_image.url }}"
                   alt="..."
                 />
               </div>
+
             </div>
             <hr class="my-4" />
-            <div class="d-flex">
-              <div class="flex-grow-1">
-                <a class="text-dark" href="#!"
-                  ><h5 class="mt-0">
-                    Is virtual reality the new UI? Exploring the use of
-                    virtual reality and 3D user interfaces for everyday
-                    products
-                  </h5></a
-                >
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Incidunt repellat possimus delectus odit vero!
-                  Accusantium, omnis! Amet reiciendis ex numquam. Minus
-                  corporis, tempore facere placeat repellat ipsum eaque
-                  similique neque.
-                </p>
-                <a class="text-arrow-icon small" href="#!">
-                  Read more
-                  <i data-feather="arrow-right"></i>
-                </a>
-              </div>
-              <div class="flex-shrink-0 ms-4">
-                <img
-                  class="align-self-start rounded shadow media-img"
-                  src="https://source.unsplash.com/HI6gy-p-WBI/160x160"
-                  alt="..."
-                />
-              </div>
-            </div>
-            <hr class="my-4" />
-            <div class="d-flex">
-              <div class="flex-grow-1">
-                <a class="text-dark" href="#!"
-                  ><h5 class="mt-0">
-                    How cats can improve your workflow productivity
-                  </h5></a
-                >
-                <p>
-                  Quasi error voluptates, commodi enim voluptate, quisquam
-                  vitae temporibus asperiores velit vero aperiam culpa
-                  iste eius autem praesentium ducimus similique iusto
-                  dolorum.
-                </p>
-                <a class="text-arrow-icon small" href="#!">
-                  Read more
-                  <i data-feather="arrow-right"></i>
-                </a>
-              </div>
-              <div class="flex-shrink-0 ms-4">
-                <img
-                  class="align-self-start rounded shadow media-img"
-                  src="https://source.unsplash.com/bN9FFTPlLjU/160x160"
-                  alt="..."
-                />
-              </div>
-            </div>
+
+            {% endfor %}
+
+            
             <hr class="my-4 d-lg-none" />
           </div>
           <div class="col-lg-5 col-xl-4">
@@ -400,17 +348,3 @@
   </div>
 </section>
 {% endblock %}
-
-<h1>Hello World!</h1>
-<ul>
-    {% for post in object_list %}
-    <li>
-        <a href="{% url 'post-details' post.pk %}">{{post.title}}</a>
-        - <a href="{% url 'category' post.category|slugify %}">{{ post.category }}</a>
-        {{post.author|capfirst}} - 
-        <br>
-        {{ post.snippet }}
-    </li>
-    {% endfor %}
-</ul>
-<a href="{% url 'add_post' %}">Add Post</a>

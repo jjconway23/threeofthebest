@@ -3,6 +3,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
 from datetime import datetime, date
+from django.db.models import UniqueConstraint, Q
 
 class Category(models.Model):
     name = models.CharField(max_length=255)
@@ -55,7 +56,16 @@ class Post(models.Model):
     category = models.CharField(max_length=255, default='uncategorized')
     likes = models.ManyToManyField(User, related_name='blog_posts', blank=True)
     snippet = models.CharField(max_length=255)
+    isFeatured = models.BooleanField(default=False)
 
+
+    class Meta:
+        """
+            This is to only allow one post with isFeatured property.
+        """
+        constraints = [
+            UniqueConstraint(fields=['isFeatured'], condition=Q(isFeatured=True), name='isFeatured')
+        ]
 
 
     def total_likes(self):
