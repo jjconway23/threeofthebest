@@ -48,3 +48,5 @@
     document.addEventListener('scroll', navbarCollapse);
 
 });
+
+console.log("Yeavhjdnbasd n")

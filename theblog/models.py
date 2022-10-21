@@ -1,3 +1,4 @@
+from email.policy import default
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
@@ -13,12 +14,11 @@ class Category(models.Model):
         return reverse('home')
 
 class SubCategory(models.Model):
-    main_category = models.ForeignKey(Category, on_delete=models.CASCADE)
     name = models.CharField(max_length=255, blank=True, null=True)
+    sub_category = models.ForeignKey(Category, on_delete=models.CASCADE, default='uncategorized', related_name='sub_category')
 
     def __str__(self):
         return self.name
-
 
 
 
