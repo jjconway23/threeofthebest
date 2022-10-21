@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title%}
+<title>Comment on Blog Post</title>
+{% endblock %}
+{% block content%}
+{% if user.is_authenticated %}
+
+<div class="form-group">
+    <form method="POST" enctype="muiltipart/form-data">
+        {% csrf_token %}
+        {{ form.media }}
+        {{ form.as_p }}
+        <input type="submit" value="Submit">
+    </form>
+</div>
+{% else %}
+<a href="{% url 'login' %}">Login to add a post</a>
+
+{% endif %}
+
+
+{% endblock %}

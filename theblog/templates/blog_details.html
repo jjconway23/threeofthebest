@@ -45,19 +45,6 @@ description meta tag too.
 
     - {{total_likes}} Likes
 <br/><br/>
-
-<h2>Comments</h2>
-{% if not post.comments.all %}
-    No Comments Yet
-{% else %}
-
-    {% for comment in post.comments.all %}
-        <strong>{{ comment.name }} - {{ comment.date_added }}</strong><br>
-        {{ comment.body }}
-        <hr>
-    {% endfor %}    
-{% endif %}
-
 </form>
 <div class="card mb-3">
     <div class="row no-gutters">
@@ -105,5 +92,18 @@ description meta tag too.
       </div>
     </div>
   </div>
+  <h2>Comments</h2>
+  {% if not post.comments.all %}
+      No Comments Yet
+        <a href="{% url 'add_comment' post.pk %}">Add Comment</a><br><br> 
 
+  {% else %}
+      <a href="{% url 'add_comment' post.pk %}">Add Comment</a><br><br>  
+      {% for comment in post.comments.all %}
+          <strong>{{ comment.name }} - {{ comment.date_added }}</strong><br>
+          {{ comment.body }}
+          <hr>
+      {% endfor %}    
+  {% endif %}
+  
 {% endblock %}

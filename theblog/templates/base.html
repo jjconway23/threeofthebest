@@ -17,21 +17,7 @@
           <ul style="display: flex; list-style-type:none; justify-content:space-evenly;">
             {% if user.is_authenticated %}
               <li><a href="{% url 'home' %}">Home</a></li>
-              <li><a href="{% url 'logout' %}">Logout</a></li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Profile
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="{% url 'edit_profile' %}">Edit Settings</a>
-                  {% if user.profile.id %}
-                    <a class="dropdown-item" href="{% url 'edit_profile_page' user.profile.id %}">Edit Profile Page</a>
-                  <a class="dropdown-item" href="{% url 'profile_page' user.profile.id %}">Show Profile Page</a>
-                  {% else%}
-                  <a class="dropdown-item" href="{% url 'create_profile_page' %}">Create Profile Page</a>
-                  {% endif %}
-        </div>
-      </li>
+
 
               
             {% else %}
@@ -59,10 +45,32 @@
               
             </li>
             {% endif %}
-  
+              {% if user.is_authenticated %}
+
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      {{ user.first_name }}
+                      {{ user.last_name }} 
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <a class="dropdown-item" href="{% url 'edit_profile' %}">Edit Settings</a>
+                      {% if user.profile.id %}
+                        <a class="dropdown-item" href="{% url 'edit_profile_page' user.profile.id %}">Edit Profile Page</a>
+                        <a class="dropdown-item" href="{% url 'profile_page' user.profile.id %}">Show Profile Page</a>
+                        <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+
+                      {% else%}
+                      <a class="dropdown-item" href="{% url 'create_profile_page' %}">Create Profile Page</a>
+                      <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+
+                      {% endif %}
+                    </div>
+                  </li>
+            {% endif %}
           </ul>
       </nav>
   </header>
+
     {% block content%}
     {% endblock %}
 
