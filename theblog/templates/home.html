@@ -133,98 +133,35 @@
         </div>
         <hr class="my-4" />
         <div class="row gx-5 mb-5">
-          <div class="col-lg-4">
-            <h6>Tech</h6>
-            <hr class="my-4" />
-            <a class="text-dark mb-4" href="#!">
-              <h6>
-                Newest tech from 2020 that can improve our quality of life
-              </h6>
-              <p class="text-gray-600 small mb-4">
-                New technology is always improving the way we live. This
-                year, we've made some major advancements.
-              </p>
-            </a>
-            <a class="text-dark mb-4" href="#!">
-              <h6>Robotics and the future of industry</h6>
-              <p class="text-gray-600 small mb-4">
-                Machining and tooling systems are improving everday with
-                the help of modern robotics.
-              </p>
-            </a>
-            <a class="text-dark mb-4" href="#!">
-              <h6>Artificial intelligence - should we be worried?</h6>
-              <p class="text-gray-600 small mb-4">
-                Ever since James Cameron's blockbuster, the discussion
-                about whether AI is safe has been on our minds.
-              </p>
-            </a>
-            <a class="text-arrow-icon small" href="#!">
-              More from Tech
-              <i data-feather="arrow-right"></i>
-            </a>
-          </div>
-          <div class="col-lg-4">
-            <h6>Business</h6>
-            <hr class="my-4" />
-            <a class="text-dark mb-4" href="#!">
-              <h6>Cottage industries and the passion economy</h6>
-              <p class="text-gray-600 small mb-4">
-                An old turn of phase states that if you do what you love,
-                you won't work a day in your life. In today's economy,
-                some are pushing that concept to the limit.
-              </p>
-            </a>
-            <a class="text-dark mb-4" href="#!">
-              <h6>Everybody love pizza!</h6>
-              <p class="text-gray-600 small mb-4">
-                Well, not everybody, but pizza companies are making major
-                moves towards global expansion.
-              </p>
-            </a>
-            <a class="text-dark mb-4" href="#!">
-              <h6>Tax season is here, and you can file for free</h6>
-              <p class="text-gray-600 small mb-4">
-                Before you go and pay to get your taxes filed, take a look
-                at some of these free options!
-              </p>
-            </a>
-            <a class="text-arrow-icon small" href="#!">
-              More from Business
-              <i data-feather="arrow-right"></i>
-            </a>
-          </div>
-          <div class="col-lg-4">
-            <h6>Health</h6>
-            <hr class="my-4" />
-            <a class="text-dark mb-4" href="#!">
-              <h6>The carnivore diet, what the science says...</h6>
-              <p class="text-gray-600 small mb-4">
-                It's like having a meat lover's pizza without the bread,
-                cheese, and sauce - but is it healthy?
-              </p>
-            </a>
-            <a class="text-dark mb-4" href="#!">
-              <h6>
-                High intensity workouts and their effect on blood pressure
-              </h6>
-              <p class="text-gray-600 small mb-4">
-                Working out with more intensity for less time, is it worth
-                the added exhaustion?
-              </p>
-            </a>
-            <a class="text-dark mb-4" href="#!">
-              <h6>An annual review of pathology and disease</h6>
-              <p class="text-gray-600 small mb-4">
-                This year's statistics are in, and the numbers have a lot
-                to say.
-              </p>
-            </a>
-            <a class="text-arrow-icon small" href="#!">
-              More from Health
-              <i data-feather="arrow-right"></i>
-            </a>
-          </div>
+            {% comment %}{% if cat_menu.post %} I need to find a way to access posts in specific category here. We need if catmenu has a post in there.{% endcomment %}
+                {% for cat in cat_menu|slice:":3" %}
+                    <div class="col-lg-4">
+                        <h6>{{cat|title}}</h6>
+                        <hr class="my-4" />
+                        {% for post in object_list|slice:":3" %}
+                            {% if post.category.name == cat %}
+
+                            <a class="text-dark mb-4" href="{% url 'post-details' post.pk%}">
+                            <h6>
+                                {{post.title|title}}
+                            </h6>
+                            <p class="text-gray-600 small mb-4">
+                                {{post.snippet}}
+                            </p>
+                            </a>
+                        {% endif %}
+                        {% endfor %}
+
+                        <a class="text-arrow-icon small" href="{% url 'category' cat|slugify %}">
+                        More from {{cat|title}}
+                        <i data-feather="arrow-right"></i>
+                        </a>
+                    </div>
+                    
+                {% endfor %}
+
+            
+          
         </div>
 <!-- Section below pretty much complete -->
 <div class="card mb-n5 z-1">
