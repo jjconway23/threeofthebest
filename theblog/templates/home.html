@@ -104,16 +104,25 @@
           <div class="col-lg-5 col-xl-4">
             <div class="card">
               <div class="card-body">
-                <h6>Opinion</h6>
+                <h6>Comments</h6>
                 <hr />
                 {% for comment in home_comments %}
                 <div class="d-flex mb-4">
+                  {% if comment.post.author.profile.profile_pic %}
+                  <div class="avatar avatar-lg">
+                    <img
+                      class="avatar-img"
+                      src="{{  comment.post.author.profile.profile_pic.url }}"
+                    />
+                  </div>
+                  {% else %}
                   <div class="avatar avatar-lg">
                     <img
                       class="avatar-img"
                       src="{% static 'theblog\images\default_profile_pic.png' %}"
                     />
                   </div>
+                  {% endif %}
                   <div class="ms-3">
                     <a class="text-dark" href="{% url 'post-details' comment.post.pk%}"
                       ><h6 class="mb-1">
@@ -133,14 +142,13 @@
         </div>
         <hr class="my-4" />
         <div class="row gx-5 mb-5">
-            {% comment %}{% if cat_menu.post %} I need to find a way to access posts in specific category here. We need if catmenu has a post in there.{% endcomment %}
+            {% comment %}{% if cat_menu.post|length > 0 %} I need to find a way to access posts in specific category here. We need if catmenu has a post in there.{% endcomment %}
                 {% for cat in cat_menu|slice:":3" %}
                     <div class="col-lg-4">
                         <h6>{{cat|title}}</h6>
                         <hr class="my-4" />
                         {% for post in object_list|slice:":3" %}
-                            {% if post.category.name == cat %}
-
+                            {% if post.category == cat %}
                             <a class="text-dark mb-4" href="{% url 'post-details' post.pk%}">
                             <h6>
                                 {{post.title|title}}
@@ -149,7 +157,7 @@
                                 {{post.snippet}}
                             </p>
                             </a>
-                        {% endif %}
+                            {% endif %}
                         {% endfor %}
 
                         <a class="text-arrow-icon small" href="{% url 'category' cat|slugify %}">

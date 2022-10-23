@@ -11,32 +11,64 @@ description meta tag too.
 {% endcomment %}
 {% endblock %} 
 {% block content%}
-<h1>{{post.title}}</h1>
-<small>By: {{post.author.first_name}}</small>
-<small>{{post.author.last_name}}  - {{ post.post_date }}  
-    
-    {% if user.is_authenticated %}
-        {% if user.id == post.author.id %}
-            <a href="{% url 'update_post' post.pk%}">- Update</a> 
-            <a href="{% url 'delete_post' post.pk%}">Delete</a>
-        {% endif %}
-    {% endif %}
-</small>
-<hr>
-{% if post.header_image %}
-<img src="{{ post.header_image.url }}"><br><br>
-{% endif %}
-<p>{{post.body| safe}}</p>
-<a href="{% url 'home' %}">Back</a>
-<br><br>
-<hr>
+<section class="bg-light py-10">
+    <div class="container px-5">
+      <div class="row gx-5 justify-content-center">
+        <div class="col-lg-10 col-xl-8">
+          <div class="single-post">
+            <h1>{{post.title|title}}</h1>
+            <p class="lead">{{post.snippet}}</p>
+            <div
+            class="d-flex align-items-center justify-content-between mb-5"
+          >
+          
+            <div class="single-post-meta me-4">
+                {% if post.author.profile.profile_pic %}
+              <img
+                class="single-post-meta-img"
+                src="{{ post.author.profile.profile_pic.url }}"
+              />
+                {% else %}
+                <img
+                class="single-post-meta-img"
+                src="{% static 'theblog\images\default_profile_pic.png' %}"
+              />
+              {% endif %}
+                
+              <div class="single-post-meta-details">
+                <div class="single-post-meta-details-name">
+                    {{ post.author.first_name|title }} {{ post.author.last_name|title }}
+                </div>
+                <div class="single-post-meta-details-date">
+                  {{post.post_date}} &middot; 6 min read
+                </div>
+              </div>
+            </div>
+          </div>
+          <img
+                      class="img-fluid mb-2 rounded"
+                      src="{{ post.header_image.url }}"
+                    />
+                    {% comment %}{% if post.photo_credit %}{% endcomment %}
+          <div class="small text-gray-500 text-center">
+                      Photo Credit: Unsplash
+          </div>
+          <div class="single-post-text my-5">
+            {{post.body| safe}}
+            <hr class="my-5" />
+            
+          </div>
+                
+
+          
 <form action="{% url 'like_post' post.pk %}" method="POST">
     {% csrf_token %}
     {% if user.is_authenticated %}
         {% if  liked %}
-            <button type="submit" value="{{ post.id }}" name="post_id">Unlike</button> 
+
+            <button style="border:none; background:transparent;" type="submit" value="{{ post.id }}" name="post_id"><i class="fa-solid fa-thumbs-down"></i></button> 
         {% else %}
-            <button type="submit" value="{{ post.id }}" name="post_id">Like</button>
+            <button style="border:none; background:transparent;"  type="submit" value="{{ post.id }}" name="post_id"><i class="fa-solid fa-thumbs-up"></i></button>
         {% endif %}
     {% else %}
         <a href="{% url 'login' %}">Login in to like</a> 
@@ -46,66 +78,101 @@ description meta tag too.
     - {{total_likes}} Likes
 <br/><br/>
 </form>
-<div class="card mb-3">
-    <div class="row no-gutters">
-      <div class="col-md-2">
-        {% if post.author.profile.profile_pic %}
-            <img class="card-img" src="{{ post.author.profile.profile_pic.url }}">
-        {% else %}
-            <img class="card-img" src="{% static 'theblog\images\default_profile_pic.png' %}">
-        {% endif %}
-
-      </div>
-      <div class="col-md-10">
+<div class="col-sm-12 mx-auto ">
+    <div class="card card-team">
         <div class="card-body">
-          <h5 class="card-title">{{post.author.first_name}} {{post.author.last_name}}</h5>
-          <p class="small text-muted">
-            {% if post.author.profile.id %}
-
-            <a href="{% url 'profile_page' post.author.profile.id %}">Profile</a> | 
+            {% if post.author.profile.profile_pic %}
+                <img class="card-team-img mb-3"  src="{{ post.author.profile.profile_pic.url }}">
+            {% else %}
+                <img class="card-team-img mb-3"  src="{% static 'theblog\images\default_profile_pic.png' %}">
             {% endif %}
+            <a href="{% url 'profile_page' post.author.profile.id %}"><div class="card-team-name mb-1">{{ post.author.first_name|title }} {{ post.author.last_name|title }}</div>
+            <div class="card-team-position mb-2">
+                {{ post.author.username }}
+              </div>
+            </a>
+            <p class="small mb-0">{{ post.author.profile.bio }}</p>
+        </div>
+        <div class="card-footer text-center ">
 
             {% if post.author.profile.instagram_url %}
-                <a target="_blank" href="{{ post.author.profile.instagram_url }}">Instagram</a> | 
+                <a target="_blank" class="btn btn-icon btn-transparent-dark mx-1" href="{{ post.author.profile.instagram_url }}"><i class="fa-brands fa-instagram"></i></a>|
             {% endif %}
 
             {% if post.author.profile.facebook_url %}
-                <a target="_blank" href="{{ post.author.profile.facebook_url }}">Facebook</a> | 
+            <a target="_blank" class="btn btn-icon btn-transparent-dark mx-1" href="#!"><svg class="svg-inline--fa fa-facebook-f" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="facebook-f" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" data-fa-i2svg=""><path fill="currentColor" d="M279.1 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.4 0 225.4 0c-73.22 0-121.1 44.38-121.1 124.7v70.62H22.89V288h81.39v224h100.2V288z"></path></svg><!-- <i class="fab fa-facebook-f"></i> Font Awesome fontawesome.com --></a>|
             {% endif %}
-
             {% if post.author.profile.twitter_url %}
-                <a target="_blank" href="{{ post.author.profile.twitter_url }}">Twitter</a> | 
+            <a target="_blank" class="btn btn-icon btn-transparent-dark mx-1" href="#!"><svg class="svg-inline--fa fa-twitter" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="twitter" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M459.4 151.7c.325 4.548 .325 9.097 .325 13.65 0 138.7-105.6 298.6-298.6 298.6-59.45 0-114.7-17.22-161.1-47.11 8.447 .974 16.57 1.299 25.34 1.299 49.06 0 94.21-16.57 130.3-44.83-46.13-.975-84.79-31.19-98.11-72.77 6.498 .974 12.99 1.624 19.82 1.624 9.421 0 18.84-1.3 27.61-3.573-48.08-9.747-84.14-51.98-84.14-102.1v-1.299c13.97 7.797 30.21 12.67 47.43 13.32-28.26-18.84-46.78-51.01-46.78-87.39 0-19.49 5.197-37.36 14.29-52.95 51.65 63.67 129.3 105.3 216.4 109.8-1.624-7.797-2.599-15.92-2.599-24.04 0-57.83 46.78-104.9 104.9-104.9 30.21 0 57.5 12.67 76.67 33.14 23.72-4.548 46.46-13.32 66.6-25.34-7.798 24.37-24.37 44.83-46.13 57.83 21.12-2.273 41.58-8.122 60.43-16.24-14.29 20.79-32.16 39.31-52.63 54.25z"></path></svg><!-- <i class="fab fa-twitter"></i> Font Awesome fontawesome.com --></a>|
             {% endif %}
-
             {% if post.author.profile.tiktok_url %}
-                <a target="_blank" href="{{ post.author.profile.tiktok_url }}">TikTok</a> |
+                <a target="_blank" href="{{ post.author.profile.tiktok_url }}" class="btn btn-icon btn-transparent-dark mx-1"><i class="fa-brands fa-tiktok"></i></a> |
             {% endif %}
-
             {% if post.author.profile.snapchat_url %}
-                <a target="_blank" href="{{ post.author.profile.snapchat_url }}">Snapchat</a> | 
+            <a target="_blank" href="{{ post.author.profile.snapchat_url }}" class="btn btn-icon btn-transparent-dark mx-1"><i class="fa-brands fa-snapchat"></i></a> | 
             {% endif %}
-
             {% if post.author.profile.youtube_url %}
-                <a target="_blank" href="{{ post.author.profile.youtube_url }}">Youtube</a> 
+            <a target="_blank" href="{{ post.author.profile.youtube_url }}" class="btn btn-icon btn-transparent-dark mx-1"><i class="fa-brands fa-youtube"></i></a> 
             {% endif %}
-            (can use font awesome icons instead?)</p>
-          <p class="card-text">{{ post.author.profile.bio }}</p>
+            
         </div>
-      </div>
     </div>
+</div>
+<div class="text-center mt-4">
+    <a
+      class="btn btn-transparent-dark"
+      href="{% url 'home' %}"
+      >Back to Blog Overview</a
+    >
   </div>
   <h2>Comments</h2>
-  {% if not post.comments.all %}
-      No Comments Yet
-        <a href="{% url 'add_comment' post.pk %}">Add Comment</a><br><br> 
 
-  {% else %}
-      <a href="{% url 'add_comment' post.pk %}">Add Comment</a><br><br>  
-      {% for comment in post.comments.all %}
-          <strong>{{ comment.name }} - {{ comment.date_added }}</strong><br>
-          {{ comment.body }}
-          <hr>
-      {% endfor %}    
-  {% endif %}
-  
+  <div class="row d-flex justify-content-center mb-4">
+    <div class="col-sm-12">
+      <div class="card shadow-0 border" style="background-color: #f0f2f5;">
+        <div class="card-body p-4">
+            {% if not post.comments.all %}
+                <p>No Comments Yet</p>
+                <a href="{% url 'add_comment' post.pk %}">Add Comment</a><br><br> 
+            {% else %}
+            {% for comment in post.comments.all %}
+                <div class="card mb-4">
+                    <div class="card-body">
+                    <p>{{ comment.body }}</p>
+        
+                    <div class="d-flex justify-content-between">
+                        <div class="d-flex flex-row align-items-center">
+                            {% if comment.post.author.profile.profile_pic %}
+                        <img src="{{  comment.post.author.profile.profile_pic.url }}" alt="avatar" width="25"
+                            height="25" />
+                            {% else %}
+                            <img src="{% static 'theblog\images\default_profile_pic.png' %}" alt="avatar" width="25"
+                            height="25" />
+                            {% endif %}
+                        <p class="small mb-0 ms-2">{{ comment.name|title }} - {{ comment.date_added }}</p>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            {% endfor %}
+            {% endif %}
+            
+        </div>
+    </div>
+    </div>
+  </div>
+   
+  <div class="svg-border-rounded text-dark">
+    <!-- Rounded SVG Border-->
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 144.54 17.34"
+      preserveAspectRatio="none"
+      fill="currentColor"
+    >
+      <path
+        d="M144.54,17.34H0V0H144.54ZM0,0S32.36,17.34,72.27,17.34,144.54,0,144.54,0"
+      ></path>
+    </svg>
+  </div>
 {% endblock %}
