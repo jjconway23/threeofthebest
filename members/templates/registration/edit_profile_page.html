@@ -3,13 +3,18 @@
 <title>Edit Profile Page</title>
 {% endblock %}
 {% block content%}
+<section class="bg-light py-10">
+    <div class="container px-5">
 {% if user.is_authenticated %}
     {% if user.id == profile.user.id %}
         <div class="form-group">
-            <form method="POST" enctype="muiltipart/form-data">
+            <form class="row gx-5 mb-4" method="POST" enctype="muiltipart/form-data">
                 {% csrf_token %}
                 {{ form.as_p }}
-                <input type="submit" value="Submit">
+                <div style="display: flex; justify-content: center;" class="mx-auto mt-3 col-md-12">
+                    <input type="submit" value="Update Profile" class="btn btn-primary">
+
+                </div>
             </form>
         </div>
     {% else%}
@@ -20,4 +25,28 @@
     You are not allowed here! please login.
     <a href="{% url 'login' %}">Login</a>
 {% endif %}
+    </div>
+</section>
+<script>
+    const bio = document.querySelector('textarea[name="bio"');
+    bio.style.display = 'block'
+    // bio.style.minWidth = '70%'
+    bio.classList.add("mt-4", "form-control")
+    const labels = document.querySelectorAll('label')
+    const label = Array.from(labels)
+    label.forEach((l, index) => {
+        l.style.fontWeight = 'bold'
+        l.style.textTransform = 'capitalize'
+        if(index >= 3){
+            l.parentElement.classList.add('col-md-6','mt-3')
+
+        }
+            
+
+        
+})
+const inputs = document.querySelectorAll('input[type="text"').forEach(input => {
+        input.classList.add("form-control")
+})
+</script>
 {% endblock %}

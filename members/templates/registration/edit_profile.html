@@ -13,7 +13,7 @@
                 {{ form.as_div }}
                 <br>
                 <div style="display: flex; justify-content: center;" class="mx-auto mt-3 col-md-12">
-                    <input type="submit" value="Update Profile" class="btn btn-primary">
+                    <input type="submit" value="Update Settings" class="btn btn-primary">
 
                 </div>
             </form>
@@ -21,17 +21,17 @@
     </div>
 </section>
 <script>
-        const label = document.querySelectorAll('label')
-        const divHelpText = document.querySelector('.helptext')
-        const div = document.querySelector('#id_password')
-        let divContent = divHelpText.textContent
-        div.style.display = 'none'
-        label.forEach(label => {
-            if(label.nextSibling != divHelpText){
-                label.parentElement.classList.add('col-md-6','mt-3')
+    const label = document.querySelectorAll('label')
+    const divHelpText = document.querySelector('.helptext')
+    const div = document.querySelector('#id_password')
+    let divContent = divHelpText.textContent
+    div.style.display = 'none'
+    label.forEach(label => {
+        if(label.nextSibling != divHelpText){
+            label.parentElement.classList.add('col-md-6','mt-3')
 
-            }
-    })
+        }
+})
 
 </script>
 {% endblock %}
