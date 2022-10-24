@@ -94,8 +94,9 @@
               </div>
 
             </div>
-            <hr class="my-4" />
-
+            {% if not forloop.last %}
+              <hr class="my-4" />
+            {% endif %}
             {% endfor %}
 
             

@@ -4,6 +4,7 @@ from theblog.models import Category, Post, Comment
 from .forms import PostForm, UpdatePostForm, UpdateCommentForm
 from django.urls import reverse_lazy, reverse
 from django.http import HttpResponseRedirect
+from django.core.paginator import Paginator
 import random
 
 #Post Views
@@ -74,7 +75,13 @@ def ListAllCategoriesView(request):
 
 def ListCategoryView(request, cats):
     category_posts = Post.objects.filter(category=cats.replace("-", " "))
-    return render(request, 'categories.html', {'cats': cats.title().replace("-", " "), 'category_posts': category_posts})
+
+    p = Paginator(Post.objects.filter(category=cats.replace("-", " ")), 13)
+    page = request.GET.get('page')
+    categors = p.get_page(page)
+    nums = 'J' * categors.paginator.num_pages
+
+    return render(request, 'categories.html', {'cats': cats.title().replace("-", " "), 'category_posts': category_posts, 'categors' : categors, 'nums': nums})
 
 
 # Like Views
