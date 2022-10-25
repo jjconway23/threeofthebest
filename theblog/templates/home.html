@@ -149,7 +149,7 @@
                         <h6>{{cat|title}}</h6>
                         <hr class="my-4" />
                         {% for post in object_list|slice:":3" %}
-                            {% if post.category == cat %}
+                            {% if post.sub_category.sub_category.name == cat %}
                             <a class="text-dark mb-4" href="{% url 'post-details' post.pk%}">
                             <h6>
                                 {{post.title|title}}

@@ -76,13 +76,18 @@
                       <div class="row g-0">
                         <div class="col-lg-4 p-lg-5">
                           {% for cat in cat_menu|slice:":2" %}
-
-                          <h6 class="dropdown-header text-primary">
-                            {{cat|title}}
-                          </h6>
                           <a
                             class="dropdown-item"
                             href="{% url 'category' cat|slugify %}"
+                            >
+                          <h6 class="dropdown-header text-primary">
+                            {{cat|title}}
+                          </h6>
+                          </a
+                          >
+                          <a
+                            class="dropdown-item"
+                            href="#!"
                             >{{ cat.sub_category.name }}</a
                           >
                           <div class="dropdown-divider border-0"></div>
@@ -94,13 +99,18 @@
                         </div>
                         <div class="col-lg-4 p-lg-5">
                           {% for cat in cat_menu|slice:"2:5" %}
-
-                          <h6 class="dropdown-header text-primary">
-                            {{cat|title}}
-                          </h6>
                           <a
                             class="dropdown-item"
                             href="{% url 'category' cat|slugify %}"
+                            >
+                          <h6 class="dropdown-header text-primary">
+                            {{cat|title}}
+                          </h6>
+                          </a
+                          >
+                          <a
+                            class="dropdown-item"
+                            href="#!"
                             >{{ cat.sub_category.name }}</a
                           >
                           <div class="dropdown-divider border-0"></div>
@@ -112,13 +122,18 @@
                         </div>
                         <div class="col-lg-4 p-lg-5">
                           {% for cat in cat_menu|slice:"5:6" %}
-
-                          <h6 class="dropdown-header text-primary">
-                            {{cat|title}}
-                          </h6>
                           <a
                             class="dropdown-item"
                             href="{% url 'category' cat|slugify %}"
+                            >
+                          <h6 class="dropdown-header text-primary">
+                            {{cat|title}}
+                          </h6>
+                          </a
+                          >
+                          <a
+                            class="dropdown-item"
+                            href="#!"
                             >{{ cat.sub_category.name }}</a
                           >
                           <div class="dropdown-divider border-0"></div>

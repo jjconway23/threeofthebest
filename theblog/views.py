@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from theblog.models import Category, Post, Comment
+from theblog.models import Category, Post, Comment, SubCategory
 from .forms import PostForm, UpdatePostForm, UpdateCommentForm
 from django.urls import reverse_lazy, reverse
 from django.http import HttpResponseRedirect
@@ -16,6 +16,7 @@ class ListHomeView(ListView):
     def get_context_data(self, *args, **kwargs):
         cat_menu = Category.objects.all()
 
+        sub_cats = SubCategory.objects.all()
 
         comments = Comment.objects.all()
         home_comments = random.choices(comments, k=5)
@@ -23,6 +24,7 @@ class ListHomeView(ListView):
         context = super(ListHomeView, self).get_context_data(*args, **kwargs)
 
         context["cat_menu"] = cat_menu
+        context["sub_cats"] = sub_cats
         context["home_comments"] = home_comments
 
         return context
@@ -68,20 +70,47 @@ class DeletePostView(DeleteView):
 
 
 # Category Views
+def ListAllSubCategoriesView(request, cattys):
+    sub_category_posts = SubCategory.objects.filter(name=cattys.replace("-", " "))
+    posts = Post.objects.all()
+
+    return render(request, 'sub_categories_list.html',{
+        'sub_category_posts':sub_category_posts.title().replace('-'," "),
+        'posts': posts,
+
+    })
 
 def ListAllCategoriesView(request):
     cat_menu_list = Category.objects.all()
-    return render(request, 'categories_list.html', {'cat_menu_list': cat_menu_list})
+    p = Paginator(cat_menu_list, 2)
+    page = request.GET.get('page')
+    all_categories = p.get_page(page)
+    nums = 'J' * all_categories.paginator.num_pages
+    sub_categories = SubCategory.objects.all()
+
+
+
+    return render(request, 'categories_list.html',{
+        'cat_menu_list': cat_menu_list, 
+        'all_categories':all_categories, 
+        'nums':nums, 
+        'sub_categories':sub_categories,
+
+        })
 
 def ListCategoryView(request, cats):
     category_posts = Post.objects.filter(category=cats.replace("-", " "))
-
     p = Paginator(Post.objects.filter(category=cats.replace("-", " ")), 13)
     page = request.GET.get('page')
     categors = p.get_page(page)
     nums = 'J' * categors.paginator.num_pages
 
-    return render(request, 'categories.html', {'cats': cats.title().replace("-", " "), 'category_posts': category_posts, 'categors' : categors, 'nums': nums})
+    return render(request, 'categories.html', 
+                    {   'cats': cats.title().replace("-", " "), 
+                        'category_posts': category_posts, 
+                        'categors' : categors, 
+                        'nums': nums,
+                    })
 
 
 # Like Views

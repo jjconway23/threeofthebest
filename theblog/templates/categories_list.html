@@ -4,10 +4,85 @@
 
 {% endblock %} 
 {% block content%}
-{% for cat in cat_menu_list %}
+<header class="page-header-ui page-header-ui-dark bg-gradient-primary-to-secondary">
+    <div class="page-header-ui-content pt-10">
+        <div class="container px-5 text-center">
+            <div class="row gx-5 justify-content-center">
+                <div class="col-lg-8">
+                    <h1 class="page-header-ui-title mb-3">Blog Categories</h1>
+                    <p class="page-header-ui-text">Browse articles, keep up to date, and learn more on our
+                        blog!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="svg-border-rounded text-white">
+        <!-- Rounded SVG Border-->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 144.54 17.34" preserveAspectRatio="none" fill="currentColor"><path d="M144.54,17.34H0V0H144.54ZM0,0S32.36,17.34,72.27,17.34,144.54,0,144.54,0"></path></svg>
+    </div>
+</header>
+<section class="bg-white py-10">
+    <div class="container px-5">
+        <div class="row gx-5 justify-content-center">
+            <div class="col-lg-10">
+                {% for cat in all_categories %}
+                    <div class="d-flex align-items-center justify-content-between">
+                        <a class="dropdown-item" href="{% url 'category' cat|slugify %}"><h2 class="mb-0">{{cat|title}}</h2></a>
+                    </div>
+                    <hr class="mb-0">
+                    <ul class="list-group list-group-flush list-group-careers">
+                        {% for sub_cat in sub_categories %}
+                            {% if sub_cat.sub_category == cat %}
+                            <li class="list-group-item">
+                                <a href="{% url 'sub_category' sub_cat|slugify %}">{{sub_cat.name|title}}</a>
+                            </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                {% endfor %}
+                
+            </div>
 
-<h4><a class="dropdown-item" href="{% url 'category' cat|slugify %}">{{cat|title}}</a></h4>
+        </div>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination pagination-blog justify-content-center">
+                    {% if all_categories.has_previous %}
+                        <li class="page-item ">
+                            <a class="page-link" href="?page=1" aria-label="Previous"
+                            ><span aria-hidden="true">«</span></a
+                            >
+                        </li>
+                        <li class="page-item ">
+                            <a class="page-link" href="?page={{ all_categories.previous_page_number}}">Prev</a>
+                        </li>
+                    {% endif %}
+                    {% for i in nums %}
+                    {% if forloop.counter == all_categories.number %}
+                        <li class="page-item active">
+                            <a class="page-link" href="?page={{forloop.counter}}">{{forloop.counter}}</a>
+                        </li>
+                        {% else %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{forloop.counter}}">{{forloop.counter}}</a>
+                        </li>
+                {% endif %}
+                {% endfor %}
+                {% if all_categories.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ all_categories.next_page_number}}">Next</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ all_categories.paginator.num_pages}}" aria-label="Next"
+                    ><span aria-hidden="true">»</span></a
+                    >
+                </li>
+                {% endif %}
 
-{% endfor %}
-<a href="{% url 'home' %}">Back</a>
+                </ul>
+            </nav>
+            <a href="{% url 'home' %}">Back</a>
+    </div>
+</section>
+    
+
 {% endblock %}
