@@ -70,13 +70,16 @@ class DeletePostView(DeleteView):
 
 
 # Category Views
-def ListAllSubCategoriesView(request, cattys):
-    sub_category_posts = SubCategory.objects.filter(name=cattys.replace("-", " "))
+def ListAllSubCategoriesView(request, slug):
+    queryset = SubCategory.objects.filter(slug=slug)
+    sub_category = SubCategory.get(slug=slug) 
+
     posts = Post.objects.all()
 
     return render(request, 'sub_categories_list.html',{
         'sub_category_posts':sub_category_posts.title().replace('-'," "),
         'posts': posts,
+        'sub_category': sub_category,
 
     })
 

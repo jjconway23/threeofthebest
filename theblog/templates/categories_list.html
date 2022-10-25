@@ -34,7 +34,7 @@
                         {% for sub_cat in sub_categories %}
                             {% if sub_cat.sub_category == cat %}
                             <li class="list-group-item">
-                                <a href="{% url 'sub_category' sub_cat|slugify %}">{{sub_cat.name|title}}</a>
+                                <a href="{% url 'sub_category' sub_cat.slug %}">{{sub_cat.name|title}}</a>
                             </li>
                             {% endif %}
                         {% endfor %}
