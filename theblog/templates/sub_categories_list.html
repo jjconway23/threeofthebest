@@ -10,10 +10,6 @@
             <div class="row gx-5 justify-content-center">
                 <div class="col-lg-8">
                     <h1 class="page-header-ui-title mb-3">{{ sub_category|title }}</h1>
-                {% for post in posts %}
-
-                    {% endfor %}
-
                     <p class="page-header-ui-text">Browse articles, keep up to date, and learn more on our
                         blog!</p>
                 </div>
@@ -115,9 +111,8 @@
                     </div>
                     {% endif %}
                 {% endfor %}
-
         {% else %}
-            <p>There are no posts in this category yet. Leave us a note and let us know what you'd like to us to review!</p>
+            {% include 'layout\contact_us_form.html' %}
         {% endif %}
 
 

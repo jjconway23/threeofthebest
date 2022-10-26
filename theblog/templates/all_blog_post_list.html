@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}
-<title>Categories | 3 of the Best </title>
+<title>All Posts | 3 of the Best </title>
 {% endblock %}
 {% block content%}
 <header class="page-header-ui page-header-ui-dark bg-gradient-primary-to-secondary">
@@ -9,7 +9,7 @@
         <div class="container px-5 text-center">
             <div class="row gx-5 justify-content-center">
                 <div class="col-lg-8">
-                    <h1 class="page-header-ui-title mb-3">{{cats}}</h1>
+                    <h1 class="page-header-ui-title mb-3">All Posts</h1>
                     <p class="page-header-ui-text">Browse articles, keep up to date, and learn more on our
                         blog!</p>
                 </div>
@@ -22,10 +22,8 @@
 </header>
 
 <section class="bg-light py-10">
-    
     <div class="container px-5">
-        {% if categors %}
-                {% for post in categors|slice:":1" %}
+                {% for post in all_posts_list|slice:":1" %}
                     <a
                             class="card post-preview post-preview-featured lift mb-5 overflow-hidden"
                             href="{% url 'post-details' post.pk %}"
@@ -78,7 +76,7 @@
               
                 {% endfor %}
                 <div class="row gx-5">
-                    {% for post in categors|slice:"1:" %}
+                    {% for post in all_posts_list|slice:"1:" %}
 
                     <div class="col-md-6 col-xl-4 mb-5">
                         <a class="card post-preview lift h-100" href="{% url 'post-details' post.pk %}">
@@ -109,31 +107,21 @@
                         </a>
                     </div>
                 {% endfor %}
-
-        {% else %}
-            {% include 'layout\contact_us_form.html' %}
-        {% endif %}
-
-
     </div>
-
-
-
-    {% if categors.post %}
     <nav aria-label="Page navigation example">
         <ul class="pagination pagination-blog justify-content-center">
-            {% if categors.has_previous %}
+            {% if all_posts_list.has_previous %}
                 <li class="page-item ">
                     <a class="page-link" href="?page=1" aria-label="Previous"
                     ><span aria-hidden="true">«</span></a
                     >
                 </li>
                 <li class="page-item ">
-                    <a class="page-link" href="?page={{ categors.previous_page_number}}">Prev</a>
+                    <a class="page-link" href="?page={{ all_posts_list.previous_page_number}}">Prev</a>
                 </li>
             {% endif %}
             {% for i in nums %}
-            {% if forloop.counter == categors.number %}
+            {% if forloop.counter == all_posts_list.number %}
                 <li class="page-item active">
                     <a class="page-link" href="?page={{forloop.counter}}">{{forloop.counter}}</a>
                 </li>
@@ -143,20 +131,17 @@
                 </li>
           {% endif %}
           {% endfor %}
-          {% if categors.has_next %}
+          {% if all_posts_list.has_next %}
           <li class="page-item">
-            <a class="page-link" href="?page={{ categors.next_page_number}}">Next</a>
+            <a class="page-link" href="?page={{ all_posts_list.next_page_number}}">Next</a>
           </li>
           <li class="page-item">
-            <a class="page-link" href="?page={{ categors.paginator.num_pages}}" aria-label="Next"
+            <a class="page-link" href="?page={{ all_posts_list.paginator.num_pages}}" aria-label="Next"
               ><span aria-hidden="true">»</span></a
             >
           </li>
           {% endif %}
-
         </ul>
       </nav>
-      {% endif %}
-
     </section>
 {% endblock %}

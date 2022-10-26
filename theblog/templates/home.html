@@ -12,7 +12,7 @@
         <div class="d-flex align-items-center justify-content-between">
           <h6 class="mb-0">Featured Post</h6>
           <div>
-            <a class="text-arrow-icon small" href="#!">
+            <a class="text-arrow-icon small" href="{% url 'all_posts' %}">
               More Reviews
               <i data-feather="arrow-right"></i>
             </a>
@@ -23,8 +23,7 @@
           <div class="card-body p-0">
             <div class="row g-0">
               <div class="col-lg-6 p-5">
-                
-                {% for post in object_list %}
+                {% for post in posts %}
                     {% if post.isFeatured %}
                 <a
                   class="badge badge-marketing bg-primary-soft rounded-pill text-primary mb-3"
@@ -59,7 +58,7 @@
         <div class="d-flex align-items-center justify-content-between">
           <h6 class="mb-0">Latest Posts</h6>
           <div>
-            <a class="text-arrow-icon small" href="#!">
+            <a class="text-arrow-icon small" href="{% url 'all_posts' %}">
               View more
               <i data-feather="arrow-right"></i>
             </a>
@@ -68,7 +67,7 @@
         <hr class="mb-4" />
         <div class="row gx-5">
           <div class="col-lg-7 col-xl-8">
-            {% for post in object_list|slice:":3" %}
+            {% for post in posts|slice:":3" %}
 
             <div class="d-flex">
               <div class="flex-grow-1">
@@ -148,7 +147,7 @@
                     <div class="col-lg-4">
                         <h6>{{cat|title}}</h6>
                         <hr class="my-4" />
-                        {% for post in object_list|slice:":3" %}
+                        {% for post in posts|slice:":3" %}
                             {% if post.sub_category.sub_category.name == cat %}
                             <a class="text-dark mb-4" href="{% url 'post-details' post.pk%}">
                             <h6>
@@ -183,22 +182,40 @@
           </p>
         </div>
         <div class="col-lg-6">
-          <div class="input-group mb-2">
-            <input
-              class="form-control form-control-solid"
-              type="text"
-              placeholder="youremail@example.com"
-              aria-label="Recipient's username"
-              aria-describedby="button-addon2"
-            />
-            <button
-              class="btn btn-primary"
-              id="button-addon2"
-              type="button"
-            >
-              Sign up
-            </button>
+          {% if newsletter_name %}
+          <div class="bg-primary rounded text-light text-center p-2">
+            <h2 class="text-light">Thanks {{newsletter_name}}</h2>
+            <p>You have successfully signed up to our newsletter!</p>
           </div>
+          {% endif %}
+          <form action="{% url 'home' %}" method="POST">
+            {% csrf_token %}
+            <input
+                class="form-control form-control-solid mb-3 mt-3"
+                type="text"
+                placeholder="Your Name"
+                aria-label="Recipient's name"
+                aria-describedby="button-addon2"
+                name="newsletter-name"
+              />
+            <div class="input-group mb-2">
+              
+              <input
+                class="form-control form-control-solid"
+                type="email"
+                placeholder="youremail@example.com"
+                aria-label="Recipient's email"
+                aria-describedby="button-addon2"
+                name="newsletter-email"
+              />
+              <button
+                class="btn btn-primary"
+                id="button-addon2"
+                type="submit"
+              >Submit</button>
+            </div>
+          </form>
+          
           <div class="small text-gray-500">
             You can unsubscribe at any time.
           </div>
