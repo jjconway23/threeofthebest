@@ -9,7 +9,11 @@
         <div class="container px-5 text-center">
             <div class="row gx-5 justify-content-center">
                 <div class="col-lg-8">
-                    <h1 class="page-header-ui-title mb-3">{{ posts.sub_category.name}}</h1>
+                    <h1 class="page-header-ui-title mb-3">{{ sub_category|title }}</h1>
+                {% for post in posts %}
+
+                    {% endfor %}
+
                     <p class="page-header-ui-text">Browse articles, keep up to date, and learn more on our
                         blog!</p>
                 </div>
@@ -24,8 +28,9 @@
 <section class="bg-light py-10">
     
     <div class="container px-5">
-        {% if posts %}
-                {% for post in cattys_slug|slice:":1" %}
+        {% if all_posts %}
+                {% for post in all_posts|slice:":1" %}
+                    {% if post.sub_category == sub_category.name %}
                     <a
                             class="card post-preview post-preview-featured lift mb-5 overflow-hidden"
                             href="{% url 'post-details' post.pk %}"
@@ -75,11 +80,11 @@
                             </div>
                             </div>
                         </a>
-              
+                    {% endif %}
                 {% endfor %}
                 <div class="row gx-5">
-                    {% for post in categors|slice:"1:" %}
-
+                    {% for post in all_posts|slice:"1:" %}
+                    {% if post.sub_category == sub_category.name %}
                     <div class="col-md-6 col-xl-4 mb-5">
                         <a class="card post-preview lift h-100" href="{% url 'post-details' post.pk %}">
                             <img class="card-img-top" src="{{post.header_image.url}}" alt="...">
@@ -108,6 +113,7 @@
                             </div>
                         </a>
                     </div>
+                    {% endif %}
                 {% endfor %}
 
         {% else %}
@@ -119,21 +125,21 @@
 
 
 
-    {% if categors.post %}
+    {% if all_posts %}
     <nav aria-label="Page navigation example">
         <ul class="pagination pagination-blog justify-content-center">
-            {% if categors.has_previous %}
+            {% if all_posts.has_previous %}
                 <li class="page-item ">
                     <a class="page-link" href="?page=1" aria-label="Previous"
                     ><span aria-hidden="true">«</span></a
                     >
                 </li>
                 <li class="page-item ">
-                    <a class="page-link" href="?page={{ categors.previous_page_number}}">Prev</a>
+                    <a class="page-link" href="?page={{ all_posts.previous_page_number}}">Prev</a>
                 </li>
             {% endif %}
             {% for i in nums %}
-            {% if forloop.counter == categors.number %}
+            {% if forloop.counter == all_posts.number %}
                 <li class="page-item active">
                     <a class="page-link" href="?page={{forloop.counter}}">{{forloop.counter}}</a>
                 </li>
@@ -143,12 +149,12 @@
                 </li>
           {% endif %}
           {% endfor %}
-          {% if categors.has_next %}
+          {% if all_posts.has_next %}
           <li class="page-item">
-            <a class="page-link" href="?page={{ categors.next_page_number}}">Next</a>
+            <a class="page-link" href="?page={{ all_posts.next_page_number}}">Next</a>
           </li>
           <li class="page-item">
-            <a class="page-link" href="?page={{ categors.paginator.num_pages}}" aria-label="Next"
+            <a class="page-link" href="?page={{ all_posts.paginator.num_pages}}" aria-label="Next"
               ><span aria-hidden="true">»</span></a
             >
           </li>

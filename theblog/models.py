@@ -17,7 +17,7 @@ class Category(models.Model):
 class SubCategory(models.Model):
     name = models.CharField(max_length=255, blank=True, null=True)
     sub_category = models.ForeignKey(Category, on_delete=models.CASCADE, default='uncategorized', related_name='sub_category')
-    slug = models.SlugField(null=True, blank=True)
+    slug = models.SlugField(null=True, default='uncategorized', blank=False)
 
     def __str__(self):
         return self.name
@@ -59,6 +59,7 @@ class Post(models.Model):
     likes = models.ManyToManyField(User, related_name='blog_posts', blank=True)
     snippet = models.CharField(max_length=255)
     isFeatured = models.BooleanField(default=False)
+    sub_category = models.CharField(max_length=255, default ='uncategorized')
 
 
     class Meta:

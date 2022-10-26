@@ -72,18 +72,24 @@ class DeletePostView(DeleteView):
 # Category Views
 def ListAllSubCategoriesView(request, slug):
     sub_category = SubCategory.objects.get(slug=slug) 
-
     posts = Post.objects.all()
+
+    p = Paginator(posts, 13)
+    page = request.GET.get('page')
+    all_posts = p.get_page(page)
+    nums = 'J' * all_posts.paginator.num_pages
 
     return render(request, 'sub_categories_list.html',{
         'posts': posts,
         'sub_category': sub_category,
+        'all_posts': all_posts,
+        'nums': nums
 
     })
 
 def ListAllCategoriesView(request):
     cat_menu_list = Category.objects.all()
-    p = Paginator(cat_menu_list, 2)
+    p = Paginator(cat_menu_list, 8)
     page = request.GET.get('page')
     all_categories = p.get_page(page)
     nums = 'J' * all_categories.paginator.num_pages
