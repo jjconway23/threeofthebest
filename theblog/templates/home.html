@@ -27,7 +27,7 @@
                     {% if post.isFeatured %}
                 <a
                   class="badge badge-marketing bg-primary-soft rounded-pill text-primary mb-3"
-                  href="#!"
+                  href="{% url 'category' post.category|slugify %}"
                   >{{post.category|title}}</a
                 >
                 <a class="text-dark" href="{% url 'post-details' post.pk %}"

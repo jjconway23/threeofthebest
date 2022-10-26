@@ -121,6 +121,7 @@ class DeletePostView(DeleteView):
 def ListAllSubCategoriesView(request, slug):
     sub_category = SubCategory.objects.get(slug=slug) 
     posts = Post.objects.all()
+    post_with_slug = Post.objects.filter(sub_category__exact=sub_category).count() == 0
 
     p = Paginator(posts, 13)
     page = request.GET.get('page')
@@ -133,6 +134,7 @@ def ListAllSubCategoriesView(request, slug):
         'all_posts': all_posts,
         'nums': nums,
         'posts': posts,
+        'post_with_slug': post_with_slug,
 
     })
 

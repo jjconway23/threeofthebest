@@ -22,142 +22,137 @@
 </header>
 
 <section class="bg-light py-10">
-    
     <div class="container px-5">
         {% if all_posts %}
-                {% for post in all_posts|slice:":1" %}
-                    {% if post.sub_category == sub_category.name %}
-                    <a
+            {% for post in all_posts|slice:":1" %}
+                {% if post.sub_category == sub_category.name %}
+                        <a
                             class="card post-preview post-preview-featured lift mb-5 overflow-hidden"
                             href="{% url 'post-details' post.pk %}"
                         >
                             <div class="row g-0">
-                            <div class="col-lg-5">
-                                <div
-                                class="post-preview-featured-img"
-                                style="
-                                    background-image: url({{post.header_image.url}});
-                                "
-                                ></div>
-                            </div>
+                                <div class="col-lg-5">
+                                    <div
+                                    class="post-preview-featured-img"
+                                    style="
+                                        background-image: url({{post.header_image.url}});
+                                    "
+                                    ></div>
+                                </div>
                             <div class="col-lg-7">
                                 <div class="card-body">
-                                <div class="py-5">
-                                    <h5 class="card-title">
-                                        {{post.title}}
-                                    </h5>
-                                    <p class="card-text">
-                                        {{post.snippet}}
-                                    </p>
-                                </div>
-                                <hr />
-                                <div class="post-preview-meta">
-                                    {% if post.author.profile.profile_pic %}
-                                    <img
-                                    class="post-preview-meta-img"
-                                    src="{{ post.author.profile.profile_pic.url }}"
-                                    />
-                                    {% else %}
-                                    <img
-                                    class="post-preview-meta-img"
-                                    src="{% static 'theblog\images\default_profile_pic.png' %}"
-                                    />
-                                    {% endif %}
-                                    <div class="post-preview-meta-details">
-                                    <div class="post-preview-meta-details-name">
-                                        {{ post.author.first_name|title }} {{ post.author.last_name|title }}
+                                    <div class="py-5">
+                                        <h5 class="card-title">
+                                            {{post.title}}
+                                        </h5>
+                                        <p class="card-text">
+                                            {{post.snippet}}
+                                        </p>
                                     </div>
-                                    <div class="post-preview-meta-details-date">
-                                        {{post.post_date}} &middot; 6 min read
-                                    </div>
+                                    <hr />
+                                    <div class="post-preview-meta">
+                                        {% if post.author.profile.profile_pic %}
+                                            <img
+                                            class="post-preview-meta-img"
+                                            src="{{ post.author.profile.profile_pic.url }}"
+                                            />
+                                        {% else %}
+                                            <img
+                                            class="post-preview-meta-img"
+                                            src="{% static 'theblog\images\default_profile_pic.png' %}"
+                                            />
+                                        {% endif %}
+                                        <div class="post-preview-meta-details">
+                                            <div class="post-preview-meta-details-name">
+                                                {{ post.author.first_name|title }} {{ post.author.last_name|title }}
+                                            </div>
+                                            <div class="post-preview-meta-details-date">
+                                                {{post.post_date}} &middot; 6 min read
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                </div>
-                            </div>
                             </div>
                         </a>
                     {% endif %}
-                {% endfor %}
-                <div class="row gx-5">
-                    {% for post in all_posts|slice:"1:" %}
+            {% endfor %}
+            <div class="row gx-5">
+                {% for post in all_posts|slice:"1:" %}
                     {% if post.sub_category == sub_category.name %}
-                    <div class="col-md-6 col-xl-4 mb-5">
-                        <a class="card post-preview lift h-100" href="{% url 'post-details' post.pk %}">
-                            <img class="card-img-top" src="{{post.header_image.url}}" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">{{post.title}}</h5>
-                                <p class="card-text">{{post.snippet}}</p>
-                            </div>
-                            <div class="card-footer">
-                                <div class="post-preview-meta">
-                                {% if post.author.profile.profile_pic %}
-                                    <img
-                                    class="post-preview-meta-img"
-                                    src="{{ post.author.profile.profile_pic.url }}"
-                                    />
-                                {% else %}
-                                    <img
-                                    class="post-preview-meta-img"
-                                    src="{% static 'theblog\images\default_profile_pic.png' %}"
-                                    />
-                                {% endif %}
+                        <div class="col-md-6 col-xl-4 mb-5">
+                            <a class="card post-preview lift h-100" href="{% url 'post-details' post.pk %}">
+                                <img class="card-img-top" src="{{post.header_image.url}}" alt="...">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{post.title}}</h5>
+                                    <p class="card-text">{{post.snippet}}</p>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="post-preview-meta">
+                                    {% if post.author.profile.profile_pic %}
+                                        <img
+                                        class="post-preview-meta-img"
+                                        src="{{ post.author.profile.profile_pic.url }}"
+                                        />
+                                    {% else %}
+                                        <img
+                                        class="post-preview-meta-img"
+                                        src="{% static 'theblog\images\default_profile_pic.png' %}"
+                                        />
+                                    {% endif %}
                                     <div class="post-preview-meta-details">
                                         <div class="post-preview-meta-details-name">{{ post.author.first_name|title }} {{ post.author.last_name|title }}</div>
                                         <div class="post-preview-meta-details-date">{{post.post_date}} · 5 min read</div>
                                     </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </a>
-                    </div>
+                            </a>
+                        </div>
                     {% endif %}
                 {% endfor %}
-        {% else %}
-            {% include 'layout\contact_us_form.html' %}
-        {% endif %}
-
-
-    </div>
-
-
-
-    {% if all_posts %}
-    <nav aria-label="Page navigation example">
-        <ul class="pagination pagination-blog justify-content-center">
-            {% if all_posts.has_previous %}
-                <li class="page-item ">
-                    <a class="page-link" href="?page=1" aria-label="Previous"
-                    ><span aria-hidden="true">«</span></a
-                    >
-                </li>
-                <li class="page-item ">
-                    <a class="page-link" href="?page={{ all_posts.previous_page_number}}">Prev</a>
-                </li>
+           
             {% endif %}
-            {% for i in nums %}
-            {% if forloop.counter == all_posts.number %}
-                <li class="page-item active">
-                    <a class="page-link" href="?page={{forloop.counter}}">{{forloop.counter}}</a>
-                </li>
-                {% else %}
-                <li class="page-item">
-                    <a class="page-link" href="?page={{forloop.counter}}">{{forloop.counter}}</a>
-                </li>
-          {% endif %}
-          {% endfor %}
-          {% if all_posts.has_next %}
-          <li class="page-item">
-            <a class="page-link" href="?page={{ all_posts.next_page_number}}">Next</a>
-          </li>
-          <li class="page-item">
-            <a class="page-link" href="?page={{ all_posts.paginator.num_pages}}" aria-label="Next"
-              ><span aria-hidden="true">»</span></a
-            >
-          </li>
-          {% endif %}
+        </div>
+        {% if post_with_slug %}
+            {% include 'layout\contact_us_form.html' %}
+        {% else %}
+    {% if all_posts %}
+        <nav aria-label="Page navigation example">
+            <ul class="pagination pagination-blog justify-content-center">
+                {% if all_posts.has_previous %}
+                    <li class="page-item ">
+                        <a class="page-link" href="?page=1" aria-label="Previous"
+                        ><span aria-hidden="true">«</span></a
+                        >
+                    </li>
+                    <li class="page-item ">
+                        <a class="page-link" href="?page={{ all_posts.previous_page_number}}">Prev</a>
+                    </li>
+                {% endif %}
+                {% for i in nums %}
+                    {% if forloop.counter == all_posts.number %}
+                        <li class="page-item active">
+                            <a class="page-link" href="?page={{forloop.counter}}">{{forloop.counter}}</a>
+                        </li>
+                        {% else %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{forloop.counter}}">{{forloop.counter}}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+                {% if all_posts.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ all_posts.next_page_number}}">Next</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ all_posts.paginator.num_pages}}" aria-label="Next"
+                        ><span aria-hidden="true">»</span></a
+                        >
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    {% endif %}
+    {% endif %}
 
-        </ul>
-      </nav>
-      {% endif %}
-
-    </section>
+</section>
 {% endblock %}
