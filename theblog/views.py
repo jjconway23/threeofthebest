@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.core.mail import send_mail
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from theblog.models import Category, Post, Comment, SubCategory
+from theblog.models import Category, Post, Comment, SubCategory,Product
 from .forms import PostForm, UpdatePostForm, UpdateCommentForm
 from django.urls import reverse_lazy, reverse
 from django.http import HttpResponseRedirect
@@ -41,10 +41,10 @@ def ListHomeView(request):
         newsletter_name = request.POST['newsletter-name']
         newsletter_email = request.POST['newsletter-email']
 
-        # Send an email
+        #Send an email
         # send_mail(
-        #    'Message From ' + newsletter_name , # subject
-        #    'THanks for signing up to our newsletter',
+        #    'News Letter SignUp ' + newsletter_name , # subject
+        #    'Thanks for signing up to our newsletter',# message
         #     newsletter_email, # from email
         #     ['jacob.peat01@gmail.com', 'jacob17peat@hotmail.com',], # to email
         # )
@@ -85,6 +85,10 @@ class DetailPostView(DetailView):
     def get_context_data(self, *args, **kwargs):
         cat_menu = Category.objects.all()
 
+        #is_chosen_product = Post.product.objects.filter(product__chose_product=True)
+        is_chosen_product = Product.objects.filter(chosen_product__exact=True)
+        print(is_chosen_product)
+
         post_wanted = get_object_or_404(Post, id=self.kwargs['pk'])
         total_likes = post_wanted.total_likes()
         liked = False
@@ -96,6 +100,7 @@ class DetailPostView(DetailView):
         context["cat_menu"] = cat_menu
         context["total_likes"] = total_likes
         context['liked'] = liked
+        context['is_chosen_product'] = is_chosen_product
         return context
 
 
@@ -195,3 +200,14 @@ class CreateCommentView(CreateView):
 
     def get_success_url(self):
         return reverse_lazy('post-details', kwargs={'pk': self.kwargs['pk']})
+
+
+# Error Handling Page Views
+def handle_not_found(request,exception):
+    return render(request,'not_found.html')
+
+def handle_bad_error(request,exception):
+    return render(request,'bad_error.html')
+
+def handle_unauthorized_access(request,exception):
+    return render(request,'unauthorized_access.html')

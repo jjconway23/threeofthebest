@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+<title>The Primed Buyer | 400 Error </title>
+{% endblock %}
+{% block content%}
+<section class="bg-light py-10">
+    <div class="container px-5">
+        <div class="row gx-5 justify-content-center">
+            <div class="col-lg-6">
+                <div class="text-center mt-4">
+                    <img class="img-fluid p-4" src="assets/img/illustrations/400-error-bad-request.svg" alt="...">
+                    <p class="lead">Your client has issued a malformed or illegal request.</p>
+                    <a class="text-arrow-icon" href="{% url 'home' %}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left ms-0 me-1"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                        Return Home
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="svg-border-rounded text-dark">
+            <!-- Rounded SVG Border-->
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 144.54 17.34" preserveAspectRatio="none" fill="currentColor"><path d="M144.54,17.34H0V0H144.54ZM0,0S32.36,17.34,72.27,17.34,144.54,0,144.54,0"></path></svg>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -12,3 +12,9 @@ urlpatterns = [
     path('members/', include('members.urls')),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+handler400="theblog.views.handle_bad_error"
+handler401="theblog.views.handle_unauthorized_access"
+handler404="theblog.views.handle_not_found"
+
+# need 500 503 504

@@ -5,6 +5,32 @@ from django.urls import reverse
 from datetime import datetime, date
 from django.db.models import UniqueConstraint, Q
 
+class Product(models.Model):
+    product_image = models.ImageField(upload_to="product_images/")
+    product_name = models.CharField(max_length=255)
+    product_description = models.CharField(max_length=255)
+    chosen_product = models.BooleanField(default=False)
+
+    product_url_1 = models.TextField(default='default')
+    product_url_2 = models.TextField(default='default')
+    product_url_3 = models.TextField(default='default')
+
+    product_seller_1 = models.CharField(max_length=255, default='default')
+    product_seller_2 = models.CharField(max_length=255, default='default')
+    product_seller_3 = models.CharField(max_length=255, default='default')
+
+    product_price_1 = models.CharField(max_length=255, default='£')
+    product_price_2 = models.CharField(max_length=255, default='£')
+    product_price_3 = models.CharField(max_length=255, default='£')
+
+    def __str__(self):
+        return self.product_name
+
+
+
+
+
+
 class Category(models.Model):
     name = models.CharField(max_length=255)
 
@@ -60,6 +86,7 @@ class Post(models.Model):
     snippet = models.CharField(max_length=255)
     isFeatured = models.BooleanField(default=False)
     sub_category = models.CharField(max_length=255, default ='uncategorized')
+    product = models.ManyToManyField(Product, blank=True)
 
 
     class Meta:

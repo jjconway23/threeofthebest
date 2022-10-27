@@ -1,6 +1,7 @@
 from pathlib import Path
 import os
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -14,7 +15,11 @@ SECRET_KEY = 'django-insecure-q531%2sbqcri0o_&#%cb5ugfbk86w+17hdw3jfx98d1hhl@m_t
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [  
+    'localhost',
+  '127.0.0.1',
+  ]
+
 
 
 # Application definition
@@ -133,9 +138,9 @@ LOGOUT_REDIRECT_URL = 'home'
 
 # Email Settings
 
-# EMAIL_HOST = 'localhost'
-# EMAIL_PORT = '1025'
-# EMAIL_HOST_USER = ''
-# EMAIL_HOST_PASSWORD = ''
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 587
+# EMAIL_HOST_USER = os.environ.get('USER_EMAIL')
+# EMAIL_HOST_PASSWORD = os.environ.get('USER_PASSWORD')
 # EMAIL_USE_TLS = False
 #EMAIL_USE_SSL = False
