@@ -86,11 +86,15 @@
                           </h6>
                           </a
                           >
-                          <a
-                            class="dropdown-item"
-                            href="#!"
-                            >{{ cat.sub_category.name }}</a
-                          >
+                          {% for sub_cat in sub_cats|slice:":3" %}
+                            {% if sub_cat.sub_category.name == cat.name %}
+                              <a
+                                class="dropdown-item"
+                                href="{% url 'sub_category' sub_cat.slug %}"
+                                >{{ sub_cat.name|title }}</a
+                              >
+                            {% endif %}
+                          {% endfor %}
                           <div class="dropdown-divider border-0"></div>
 
                           {% endfor %}
@@ -109,11 +113,15 @@
                           </h6>
                           </a
                           >
-                          <a
-                            class="dropdown-item"
-                            href="#!"
-                            >{{ cat.sub_category.name }}</a
-                          >
+                          {% for sub_cat in sub_cats|slice:":2" %}
+                            {% if sub_cat.sub_category.name == cat.name %}
+                              <a
+                                class="dropdown-item"
+                                href="{% url 'sub_category' sub_cat.slug %}"
+                                >{{ sub_cat.name|title }}</a
+                              >
+                            {% endif %}
+                          {% endfor %}
                           <div class="dropdown-divider border-0"></div>
 
                           {% endfor %}
@@ -132,11 +140,15 @@
                           </h6>
                           </a
                           >
-                          <a
-                            class="dropdown-item"
-                            href="#!"
-                            >{{ cat.sub_category.name }}</a
-                          >
+                          {% for sub_cat in sub_cats|slice:":6" %}
+                            {% if sub_cat.sub_category.name == cat.name %}
+                              <a
+                                class="dropdown-item"
+                                href="{% url 'sub_category' sub_cat.slug %}"
+                                >{{ sub_cat.name|title }}</a
+                              >
+                            {% endif %}
+                          {% endfor %}
                           <div class="dropdown-divider border-0"></div>
 
                           {% endfor %}
@@ -279,7 +291,7 @@
             <div class="container px-5">
               <div class="row gx-5">
                 <div class="col-lg-3">
-                  <div class="footer-brand">3 of the Best</div>
+                  <div class="footer-brand">The Primed  Buyer</div>
                   <div class="mb-3">Making the product hunt easy.</div>
                   <div class="icon-list-social mb-5">
                     <a class="icon-list-social-link" href="#!"
@@ -300,7 +312,7 @@
               <hr class="my-5" />
               <div class="row gx-5 align-items-center">
                 <div class="col-md-6 small">
-                  Copyright &copy; 3 of the Best <span id="copyright-date"></span>
+                  Copyright &copy; The Primed  Buyer <span id="copyright-date"></span>
                 </div>
                 <div class="col-md-6 text-md-end small">
                   <a href="#!">Privacy Policy</a>

@@ -4,7 +4,7 @@
 <meta name="description" content="">
 <meta name="keywords" content="HTML, CSS, JavaScript">
 <meta name="author" content="John Doe">
-<title>3 of the Best</title>
+<title>The Primed  Buyer</title>
 {% endblock %}
 {% block content%}
 <section class="bg-light py-5">
@@ -134,7 +134,7 @@
         <h6>{{cat|title}}</h6>
         <hr class="my-4" />
         {% for post in posts|slice:3 %}
-          {% if post.category.name == cat %}
+          {% if post.category == cat.name %}
           <a class="text-dark mb-4" href="{% url 'post-details' post.pk %}">
             <h6>
               {{post.title|title}}

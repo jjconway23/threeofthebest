@@ -44,10 +44,6 @@ class DetailPostView(DetailView):
     def get_context_data(self, *args, **kwargs):
         cat_menu = Category.objects.all()
 
-        #is_chosen_product = Post.product.objects.filter(product__chose_product=True)
-        is_chosen_product = Product.objects.filter(chosen_product__exact=True)
-        print(is_chosen_product)
-
         post_wanted = get_object_or_404(Post, id=self.kwargs['pk'])
         total_likes = post_wanted.total_likes()
         liked = False
@@ -59,7 +55,6 @@ class DetailPostView(DetailView):
         context["cat_menu"] = cat_menu
         context["total_likes"] = total_likes
         context['liked'] = liked
-        context['is_chosen_product'] = is_chosen_product
         return context
 
 
@@ -162,12 +157,6 @@ class CreateCommentView(CreateView):
 
 
 # Error Handling Page Views
-
-def my_test_error_view(request):
-    # Return an "Internal Server Error" 500 response code.
-    return HttpResponse(status=500)
-
-
 def handle_not_found(request,exception):
     """ Handles 404 Error """
     return render(request,'not_found.html')
@@ -191,3 +180,13 @@ def handle_server_unavailable(request,exception):
 def handle_temporary_error(request,exception):
     """Handles 504 Error"""
     return render(request,'temporary_error.html')
+
+# About Us Terms and Conditions
+def about_us(request):
+    return render(request, 'about_us.html')
+
+def privacy_policy(request):
+    return render(request, 'privacy_policy.html')
+
+def contact_us(request):
+    return render(request, 'contact_us.html')

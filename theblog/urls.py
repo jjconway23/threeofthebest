@@ -14,7 +14,9 @@ urlpatterns = [
     path('like/<int:pk>/', views.LikeView, name='like_post'),
     path('article/<int:pk>/add_comment/', views.CreateCommentView.as_view(), name='add_comment'),
     path('posts/',views.ListAllPostsView, name='all_posts'),
-    path("/error-page/",views.my_test_error_view)
+    path("about-us/",views.about_us, name='about_us'),
+    path("privacy-policy/", views.privacy_policy, name='privacy_policy'),
+    path("contact-us/", views.contact_us, name='contact_us'),
 
     
 
