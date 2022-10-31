@@ -4,8 +4,9 @@
 {% endblock %}
 {% block content%}
 {% if user.is_authenticated %}
-
-<div class="form-group">
+<section class="bg-light py-10">
+    <div class="container px-5">
+<div class="form-group" style="width:70%; margin:0 auto;">
     <form method="POST" enctype="muiltipart/form-data">
         {% csrf_token %}
         {{ form.media }}
@@ -17,6 +18,12 @@
 <a href="{% url 'login' %}">Login to add a post</a>
 
 {% endif %}
-
-
+</div>
+</section>
+<script>
+    let name = '{{ user.username }}';
+    let textInput = document.getElementById("form-user-id")
+    textInput.value = name;
+    textInput.setAttribute("disabled", "")
+</script>
 {% endblock %}

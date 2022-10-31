@@ -8,233 +8,217 @@
 {% endblock %}
 {% block content%}
 <section class="bg-light py-5">
-    <div class="container px-5">
-        <div class="d-flex align-items-center justify-content-between">
-          <h6 class="mb-0">Featured Post</h6>
-          <div>
-            <a class="text-arrow-icon small" href="{% url 'all_posts' %}">
-              More Reviews
+  <div class="container px-5">
+    <div class="d-flex align-items-center justify-content-between">
+      <h6 class="mb-0">Featured Post</h6>
+      <div>
+        <a class="text-arrow-icon small" href="{% url 'all_posts' %}">
+          More Reviews
+          <i data-feather="arrow-right"></i>
+        </a>
+      </div>
+    </div>
+    <hr class="mb-4" />
+    <div class="card mb-4">
+      <div class="card-body p-0">
+        <div class="row g-0">
+          <div class="col-lg-6 p-5">
+            {% for post in posts %}
+            {% if post.isFeatured %}
+            <a class="badge badge-marketing bg-primary-soft rounded-pill text-primary mb-3"
+              href="{% url 'category' post.category|slugify %}">{{post.category|title}}</a>
+            <a class="text-dark" href="{% url 'post-details' post.pk %}">
+              <h1>
+                {{post.title}}
+              </h1>
+            </a>
+            <p>
+              {{post.snippet}}
+
+            </p>
+            <a class="text-arrow-icon small" href="{% url 'post-details' post.pk %}">
+              Read more
               <i data-feather="arrow-right"></i>
             </a>
           </div>
-        </div>
-        <hr class="mb-4" />
-        <div class="card mb-4">
-          <div class="card-body p-0">
-            <div class="row g-0">
-              <div class="col-lg-6 p-5">
-                {% for post in posts %}
-                    {% if post.isFeatured %}
-                <a
-                  class="badge badge-marketing bg-primary-soft rounded-pill text-primary mb-3"
-                  href="{% url 'category' post.category|slugify %}"
-                  >{{post.category|title}}</a
-                >
-                <a class="text-dark" href="{% url 'post-details' post.pk %}"
-                  ><h1>
-                    {{post.title}}
-                  </h1></a
-                >
-                <p>
-                    {{post.snippet}}
-
-                </p>
-                <a class="text-arrow-icon small" href="{% url 'post-details' post.pk %}">
-                  Read more
-                  <i data-feather="arrow-right"></i>
-                </a>
-              </div>
-              <div
-                class="col-lg-6 align-self-stretch bg-img-cover d-none d-lg-flex"
-                style="
+          <div class="col-lg-6 align-self-stretch bg-img-cover d-none d-lg-flex" style="
                   background-image: url('{{post.header_image.url}}');
-                "
-              ></div>
-              {% endif %}
-              {% endfor %}
-            </div>
-          </div>
+                "></div>
+          {% endif %}
+          {% endfor %}
         </div>
-        <div class="d-flex align-items-center justify-content-between">
-          <h6 class="mb-0">Latest Posts</h6>
-          <div>
-            <a class="text-arrow-icon small" href="{% url 'all_posts' %}">
-              View more
+      </div>
+    </div>
+    <div class="d-flex align-items-center justify-content-between">
+      <h6 class="mb-0">Latest Posts</h6>
+      <div>
+        <a class="text-arrow-icon small" href="{% url 'all_posts' %}">
+          View more
+          <i data-feather="arrow-right"></i>
+        </a>
+      </div>
+    </div>
+    <hr class="mb-4" />
+    <div class="row gx-5">
+      <div class="col-lg-7 col-xl-8">
+        {% for post in posts|slice:":3" %}
+
+        <div class="d-flex">
+          <div class="flex-grow-1">
+            <a class="text-dark" href="{% url 'post-details' post.pk %}">
+              <h5 class="mt-0">
+                {{post.title|title}}
+              </h5>
+            </a>
+            <p>
+              {{ post.snippet }}
+            </p>
+            <a class="text-arrow-icon small" href="{% url 'post-details' post.pk %}">
+              Read more
               <i data-feather="arrow-right"></i>
             </a>
           </div>
-        </div>
-        <hr class="mb-4" />
-        <div class="row gx-5">
-          <div class="col-lg-7 col-xl-8">
-            {% for post in posts|slice:":3" %}
-
-            <div class="d-flex">
-              <div class="flex-grow-1">
-                <a class="text-dark" href="{% url 'post-details' post.pk %}"
-                  ><h5 class="mt-0">
-                    {{post.title|title}}
-                  </h5></a
-                >
-                <p>
-                    {{ post.snippet }}
-                </p>
-                <a class="text-arrow-icon small" href="{% url 'post-details' post.pk %}">
-                  Read more
-                  <i data-feather="arrow-right"></i>
-                </a>
-              </div>
-              <div class="flex-shrink-0 ms-4">
-                <img
-                  class="align-self-start rounded shadow media-img"
-                  src="{{ post.header_image.url }}"
-                  alt="..."
-                />
-              </div>
-
-            </div>
-            {% if not forloop.last %}
-              <hr class="my-4" />
-            {% endif %}
-            {% endfor %}
-
-            
-            <hr class="my-4 d-lg-none" />
+          <div class="flex-shrink-0 ms-4">
+            <img class="align-self-start rounded shadow media-img" src="{{ post.header_image.url }}" alt="..." />
           </div>
-          <div class="col-lg-5 col-xl-4">
-            <div class="card">
-              <div class="card-body">
-                <h6>Comments</h6>
-                <hr />
-                {% for comment in home_comments %}
-                <div class="d-flex mb-4">
-                  {% if comment.post.author.profile.profile_pic %}
-                  <div class="avatar avatar-lg">
-                    <img
-                      class="avatar-img"
-                      src="{{  comment.post.author.profile.profile_pic.url }}"
-                    />
-                  </div>
-                  {% else %}
-                  <div class="avatar avatar-lg">
-                    <img
-                      class="avatar-img"
-                      src="{% static 'theblog\images\default_profile_pic.png' %}"
-                    />
-                  </div>
-                  {% endif %}
-                  <div class="ms-3">
-                    <a class="text-dark" href="{% url 'post-details' comment.post.pk%}"
-                      ><h6 class="mb-1">
-                        {{comment.body}}
-                      </h6></a
-                    >
-                    <div class="small text-gray-500">
-                      by
-                      <a class="text-gray-500" href="{% url 'profile_page' comment.post.author.profile.id %}">{{comment.post.author.first_name|title}}</a>
-                    </div>
-                  </div>
-                </div>
-                {% endfor %}
-              </div>
-            </div>
-          </div>
+
         </div>
+        {% if not forloop.last %}
         <hr class="my-4" />
-        <div class="row gx-5 mb-5">
-            {% comment %}{% if cat_menu.post|length > 0 %} I need to find a way to access posts in specific category here. We need if catmenu has a post in there.{% endcomment %}
-                {% for cat in cat_menu|slice:":3" %}
-                    <div class="col-lg-4">
-                        <h6>{{cat|title}}</h6>
-                        <hr class="my-4" />
-                        {% for post in posts|slice:":3" %}
-                            {% if post.sub_category.sub_category.name == cat %}
-                            <a class="text-dark mb-4" href="{% url 'post-details' post.pk%}">
-                            <h6>
-                                {{post.title|title}}
-                            </h6>
-                            <p class="text-gray-600 small mb-4">
-                                {{post.snippet}}
-                            </p>
-                            </a>
-                            {% endif %}
-                        {% endfor %}
+        {% endif %}
+        {% endfor %}
 
-                        <a class="text-arrow-icon small" href="{% url 'category' cat|slugify %}">
-                        More from {{cat|title}}
-                        <i data-feather="arrow-right"></i>
-                        </a>
-                    </div>
-                    
-                {% endfor %}
 
-            
-          
-        </div>
-<!-- Section below pretty much complete -->
-<div class="card mb-n5 z-1">
-    <div class="card-body p-5">
-      <div class="row gx-5 align-items-center">
-        <div class="col-lg-6">
-          <h4>Get the latest Reviews</h4>
-          <p class="lead text-gray-500 mb-0">
-            Stay in the loop with the latest reviews, offers and more !
-          </p>
-        </div>
-        <div class="col-lg-6">
-          {% if newsletter_name %}
-          <div class="bg-primary rounded text-light text-center p-2">
-            <h2 class="text-light">Thanks {{newsletter_name}}</h2>
-            <p>You have successfully signed up to our newsletter!</p>
-          </div>
-          {% endif %}
-          <form action="{% url 'home' %}" method="POST">
-            {% csrf_token %}
-            <input
-                class="form-control form-control-solid mb-3 mt-3"
-                type="text"
-                placeholder="Your Name"
-                aria-label="Recipient's name"
-                aria-describedby="button-addon2"
-                name="newsletter-name"
-              />
-            <div class="input-group mb-2">
-              
-              <input
-                class="form-control form-control-solid"
-                type="email"
-                placeholder="youremail@example.com"
-                aria-label="Recipient's email"
-                aria-describedby="button-addon2"
-                name="newsletter-email"
-              />
-              <button
-                class="btn btn-primary"
-                id="button-addon2"
-                type="submit"
-              >Submit</button>
+        <hr class="my-4 d-lg-none" />
+      </div>
+      <div class="col-lg-5 col-xl-4">
+        <div class="card">
+          <div class="card-body">
+            <h6>Comments</h6>
+            <hr />
+            {% for comment in home_comments %}
+            <div class="d-flex mb-4">
+              {% if comment.post.author.profile.profile_pic %}
+              <div class="avatar avatar-lg">
+                <img class="avatar-img" src="{{  comment.post.author.profile.profile_pic.url }}" />
+              </div>
+              {% else %}
+              <div class="avatar avatar-lg">
+                <img class="avatar-img" src="{% static 'theblog\images\default_profile_pic.png' %}" />
+              </div>
+              {% endif %}
+              <div class="ms-3">
+                <a class="text-dark" href="{% url 'post-details' comment.post.pk%}">
+                  <h6 class="mb-1">
+                    {{comment.body}}
+                  </h6>
+                </a>
+                <div class="small text-gray-500">
+                  by
+                  <a class="text-gray-500"
+                    href="{% url 'profile_page' comment.post.author.profile.id %}">{{comment.post.author.first_name|title}}</a>
+                </div>
+              </div>
             </div>
-          </form>
-          
-          <div class="small text-gray-500">
-            You can unsubscribe at any time.
+            {% endfor %}
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="svg-border-rounded text-dark">
-    <!-- Rounded SVG Border-->
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 144.54 17.34"
-      preserveAspectRatio="none"
-      fill="currentColor"
-    >
-      <path
-        d="M144.54,17.34H0V0H144.54ZM0,0S32.36,17.34,72.27,17.34,144.54,0,144.54,0"
-      ></path>
-    </svg>
-  </div>
+    <hr class="my-4" />
+    <div class="row gx-5 mb-5">
+      {% comment %}{% if cat_menu.post|length > 0 %} I need to find a way to access posts in specific category here. We
+      need if catmenu has a post in there.{% endcomment %}
+      {% for cat in cat_menu|slice:":3" %}
+      <div class="col-lg-4">
+        <h6>{{cat|title}}</h6>
+        <hr class="my-4" />
+        {% for post in posts|slice:3 %}
+          {% if post.category.name == cat %}
+          <a class="text-dark mb-4" href="{% url 'post-details' post.pk %}">
+            <h6>
+              {{post.title|title}}
+            </h6>
+            <p class="text-gray-600 small mb-4">
+              {{post.snippet}}
+            </p>
+          </a>
+          {% endif %}
+        {% endfor %}
+
+        <a class="text-arrow-icon small" href="{% url 'category' cat|slugify %}">
+          More from {{cat|title}}
+          <i data-feather="arrow-right"></i>
+        </a>
+      </div>
+
+      {% endfor %}
+
+
+
+    </div>
+    <!-- Section below pretty much complete -->
+    <div class="card mb-n5 z-1">
+      <div class="card-body p-5">
+        <div class="row gx-5 align-items-center">
+          <div class="col-lg-6">
+            <h4>Get the latest Reviews</h4>
+            <p class="lead text-gray-500 mb-0">
+              Stay in the loop with the latest reviews, offers and more !
+            </p>
+          </div>
+          <div class="col-lg-6">
+            <!-- Begin Mailchimp Signup Form -->
+              <form
+                action="{{url}}"
+                method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate"
+                target="_blank">
+                <div id="mc_embed_signup_scroll">
+                  <div class="mc-field-group">
+                    <label for="mce-FNAME" hidden>Full Name <span class="asterisk">*</span>
+                    </label>
+                    <input type="text" aria-label="Recipient's full name" placeholder="Name"
+                      aria-describedby="button-addon2" value="" name="FNAME"
+                      class="required form-control form-control-solid mb-3 mt-3" id="mce-FNAME" required>
+                    <span id="mce-FNAME-HELPERTEXT" class="helper_text"></span>
+                  </div>
+                  <div class="mc-field-group">
+                    <label for="mce-EMAIL" hidden>Email Address <span class="asterisk">*</span>
+                    </label>
+                    <div class="input-group mb-2">
+
+                      <input type="email" value="" placeholder="youremail@example.com" name="EMAIL"
+                        class="required email form-control form-control-solid" id="mce-EMAIL" required>
+                      <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe"
+                        class="button btn btn-primary rounded">
+                      <span id="mce-EMAIL-HELPERTEXT" class="helper_text"></span>
+                    </div>
+                    <div id="mce-responses" class="clear">
+                      <div class="response" id="mce-error-response" style="display:none"></div>
+                      <div class="response" id="mce-success-response" style="display:none"></div>
+                    </div>
+                    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+                    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text"
+                        name="b_01d2f3275dc6b906deb0bcb91_fc6c622ffa" tabindex="-1" value=""></div>
+                    <div class="clear"></div>
+                  </div>
+              </form>
+            <!--End mc_embed_signup-->
+            <div class="small text-gray-500">
+              You can unsubscribe at any time.
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    </div>
+    <div class="svg-border-rounded text-dark">
+      <!-- Rounded SVG Border-->
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 144.54 17.34" preserveAspectRatio="none" fill="currentColor">
+        <path d="M144.54,17.34H0V0H144.54ZM0,0S32.36,17.34,72.27,17.34,144.54,0,144.54,0"></path>
+      </svg>
+    </div>
 </section>
+
 {% endblock %}

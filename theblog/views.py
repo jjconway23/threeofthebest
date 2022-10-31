@@ -7,28 +7,7 @@ from django.urls import reverse_lazy, reverse
 from django.http import HttpResponseRedirect
 from django.core.paginator import Paginator
 import random
-
-#Post Views
-# class ListHomeView(ListView):
-#     model = Post
-#     template_name = 'home.html'
-#     ordering = ['-id',]
-
-#     def get_context_data(self, *args, **kwargs):
-#         cat_menu = Category.objects.all()
-
-#         sub_cats = SubCategory.objects.all()
-
-#         comments = Comment.objects.all()
-#         home_comments = random.choices(comments, k=5)
-
-#         context = super(ListHomeView, self).get_context_data(*args, **kwargs)
-
-#         context["cat_menu"] = cat_menu
-#         context["sub_cats"] = sub_cats
-#         context["home_comments"] = home_comments
-
-#         return context
+from django.http import HttpResponse
 
 def ListHomeView(request):
     posts = Post.objects.all().order_by('-id')
@@ -36,33 +15,13 @@ def ListHomeView(request):
     sub_cats = SubCategory.objects.all()
     comments = Comment.objects.all()
     home_comments = random.choices(comments, k=5)
-
-    if request.method == "POST":
-        newsletter_name = request.POST['newsletter-name']
-        newsletter_email = request.POST['newsletter-email']
-
-        #Send an email
-        # send_mail(
-        #    'News Letter SignUp ' + newsletter_name , # subject
-        #    'Thanks for signing up to our newsletter',# message
-        #     newsletter_email, # from email
-        #     ['jacob.peat01@gmail.com', 'jacob17peat@hotmail.com',], # to email
-        # )
-        
-        return render(request, 'home.html', {
+    url = 'https://theprimedbuyer.us21.list-manage.com/subscribe/post?u=01d2f3275dc6b906deb0bcb91&amp;id=fc6c622ffa&amp;f_id=00fcc1e1f0'
+    return render(request, 'home.html', {
             'posts':posts,
             'cat_menu': cat_menu,
             'sub_cats': sub_cats,
             'home_comments': home_comments,
-            'newsletter_name':newsletter_name
-        })
-
-    else: 
-        return render(request, 'home.html', {
-            'posts':posts,
-            'cat_menu': cat_menu,
-            'sub_cats': sub_cats,
-            'home_comments': home_comments
+            'url': url
         })
 
 def ListAllPostsView(request):
@@ -203,11 +162,32 @@ class CreateCommentView(CreateView):
 
 
 # Error Handling Page Views
+
+def my_test_error_view(request):
+    # Return an "Internal Server Error" 500 response code.
+    return HttpResponse(status=500)
+
+
 def handle_not_found(request,exception):
+    """ Handles 404 Error """
     return render(request,'not_found.html')
 
 def handle_bad_error(request,exception):
+    """Handles 400 Error """
     return render(request,'bad_error.html')
 
 def handle_unauthorized_access(request,exception):
+    """Handles 401 Error """
     return render(request,'unauthorized_access.html')
+
+def handle_unexpected_condition(request):
+    """Handles 500 Error """
+    return render(request,'unexpected_condition.html')
+
+def handle_server_unavailable(request,exception):
+    """Handles 503 Error"""
+    return render(request,'server_unavailable.html')
+
+def handle_temporary_error(request,exception):
+    """Handles 504 Error"""
+    return render(request,'temporary_error.html')

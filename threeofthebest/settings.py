@@ -1,6 +1,8 @@
 from pathlib import Path
 import os
 
+if os.path.isfile('env.py'):
+    import env
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -135,12 +137,3 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
 
-
-# Email Settings
-
-# EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_PORT = 587
-# EMAIL_HOST_USER = os.environ.get('USER_EMAIL')
-# EMAIL_HOST_PASSWORD = os.environ.get('USER_PASSWORD')
-# EMAIL_USE_TLS = False
-#EMAIL_USE_SSL = False

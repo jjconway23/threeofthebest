@@ -45,6 +45,6 @@ class UpdateCommentForm(forms.ModelForm):
 		fields = ('name', 'body')
 
 		widgets = {
-			'name': forms.TextInput(attrs={'class': 'form-control'}),
+			'name': forms.TextInput(attrs={'class': 'form-control', 'id': 'form-user-id'}),
 			'body': forms.Textarea(attrs={'class': 'form-control'}),			
 		}

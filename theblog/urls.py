@@ -14,6 +14,7 @@ urlpatterns = [
     path('like/<int:pk>/', views.LikeView, name='like_post'),
     path('article/<int:pk>/add_comment/', views.CreateCommentView.as_view(), name='add_comment'),
     path('posts/',views.ListAllPostsView, name='all_posts'),
+    path("/error-page/",views.my_test_error_view)
 
     
 
