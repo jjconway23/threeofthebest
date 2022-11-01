@@ -31,7 +31,7 @@ description meta tag too.
                 {% else %}
                 <img
                 class="single-post-meta-img"
-                src="{% static 'theblog\images\default_profile_pic.png' %}"
+                src="https://res.cloudinary.com/jjconway23/image/upload/v1667304953/The%20Primed%20Buyer/Media/default_profile_picture_rbxjjl.png"
               />
               {% endif %}
                 
@@ -154,7 +154,7 @@ description meta tag too.
             {% if post.author.profile.profile_pic %}
                 <img class="card-team-img mb-3"  src="{{ post.author.profile.profile_pic.url }}">
             {% else %}
-                <img class="card-team-img mb-3"  src="{% static 'theblog\images\default_profile_pic.png' %}">
+                <img class="card-team-img mb-3"  src="https://res.cloudinary.com/jjconway23/image/upload/v1667304953/The%20Primed%20Buyer/Media/default_profile_picture_rbxjjl.png">
             {% endif %}
             <a href="{% url 'profile_page' post.author.profile.id %}"><div class="card-team-name mb-1">{{ post.author.first_name|title }} {{ post.author.last_name|title }}</div>
             <div class="card-team-position mb-2">
@@ -240,7 +240,7 @@ description meta tag too.
                         <img src="{{  comment.post.author.profile.profile_pic.url }}" alt="avatar" width="25"
                             height="25" />
                             {% else %}
-                            <img src="{% static 'theblog\images\default_profile_pic.png' %}" alt="avatar" width="25"
+                            <img src="https://res.cloudinary.com/jjconway23/image/upload/v1667304953/The%20Primed%20Buyer/Media/default_profile_picture_rbxjjl.png" alt="avatar" width="25"
                             height="25" />
                             {% endif %}
                         <p class="small mb-0 ms-2">{{ comment.name|title }} - {{ comment.date_added }}</p>
@@ -249,7 +249,10 @@ description meta tag too.
                     </div>
                 </div>
             {% endfor %}
+            <a href="{% url 'add_comment' post.pk %}">Add Comment</a><br><br> 
+
             {% endif %}
+
             
         </div>
     </div>

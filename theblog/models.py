@@ -4,9 +4,10 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from datetime import datetime, date
 from django.db.models import UniqueConstraint, Q
+from cloudinary.models import CloudinaryField
 
 class WinningProduct(models.Model):
-    product_image = models.ImageField(upload_to="product_images/")
+    product_image = CloudinaryField("image")
     product_name = models.CharField(max_length=255)
     product_description = models.CharField(max_length=255)
 
@@ -21,13 +22,14 @@ class WinningProduct(models.Model):
     product_price_1 = models.CharField(max_length=255, default='£')
     product_price_2 = models.CharField(max_length=255, default='£')
     product_price_3 = models.CharField(max_length=255, default='£')
+    #date_added = models.DateField(auto_now_add=True)
 
     def __str__(self):
         return self.product_name
 
 
 class Product(models.Model):
-    product_image = models.ImageField(upload_to="product_images/")
+    product_image = CloudinaryField("image")
     product_name = models.CharField(max_length=255)
     product_description = models.CharField(max_length=255)
 
@@ -42,6 +44,7 @@ class Product(models.Model):
     product_price_1 = models.CharField(max_length=255, default='£')
     product_price_2 = models.CharField(max_length=255, default='£')
     product_price_3 = models.CharField(max_length=255, default='£')
+    #date_added = models.DateField(auto_now_add=True)
 
     def __str__(self):
         return self.product_name
@@ -73,7 +76,7 @@ class SubCategory(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
     bio = models.TextField()
-    profile_pic = models.ImageField(null=True, blank=True, upload_to="profile/")
+    profile_pic = CloudinaryField("image")
     facebook_url = models.CharField(max_length=255, blank=True, null=True)
     twitter_url = models.CharField(max_length=255, blank=True, null=True)
     instagram_url = models.CharField(max_length=255, blank=True, null=True)
@@ -96,8 +99,8 @@ class Profile(models.Model):
 class Post(models.Model):
     title = models.CharField(max_length=255)
     title_tag = models.CharField(max_length=255, default='3oftheBest')
-    header_image = models.ImageField(null=True, blank=True, upload_to="images/")
-    snippet_image = models.ImageField(null=True, blank=True, upload_to="snippet-image/")
+    header_image = CloudinaryField("image")
+    snippet_image = CloudinaryField("image")
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     body = models.TextField()
     post_date = models.DateField(auto_now_add=True)

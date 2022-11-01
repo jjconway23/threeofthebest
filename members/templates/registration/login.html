@@ -4,21 +4,25 @@
 <title>Login</title>
 {% endblock %}
 {% block content%}
-<div class="form-group">
-    <form method="POST">
-        {% csrf_token %}
-        <div class="form-group">
-            <label for="id_username">Username</label>
-            <input type="text" class="form-control" name="username">
-          </div>
-          <div class="form-group">
-            <label for="id_password">Password</label>
-            <input type="password" class="form-control" name="password">
-          </div>
-        <input type="submit" value="Submit">
-    </form>
-    <small>No Account? Sign Up here<a href="{% url 'register' %}">Register Here</a></small>
-</div>
+<section class="bg-light py-10">
+  <div class="container px-5">
+    <div class="form-group">
+        <form method="POST" class=" w-75 mx-auto">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_username">Username</label>
+                <input type="text" class="form-control" name="username">
+              </div>
+              <div class="form-group">
+                <label for="id_password">Password</label>
+                <input type="password" class="form-control" name="password">
+              </div>
+            <input class="btn btn-primary mx-auto mt-3" type="submit" value="Submit"><br>
+        <small>No Account? Sign Up <a href="{% url 'register' %}"> here</a></small>
 
+        </form>
+    </div>
+  </div>
+</section>
 
 {% endblock %}

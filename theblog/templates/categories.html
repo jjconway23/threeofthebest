@@ -59,7 +59,7 @@
                                     {% else %}
                                     <img
                                     class="post-preview-meta-img"
-                                    src="{% static 'theblog\images\default_profile_pic.png' %}"
+                                    src="https://res.cloudinary.com/jjconway23/image/upload/v1667304953/The%20Primed%20Buyer/Media/default_profile_picture_rbxjjl.png"
                                     />
                                     {% endif %}
                                     <div class="post-preview-meta-details">
@@ -82,7 +82,7 @@
 
                     <div class="col-md-6 col-xl-4 mb-5">
                         <a class="card post-preview lift h-100" href="{% url 'post-details' post.pk %}">
-                            <img class="card-img-top" src="{{post.header_image.url}}" alt="...">
+                            <img class="card-img-top" src="{{post.header_image.url}}" alt="post image">
                             <div class="card-body">
                                 <h5 class="card-title">{{post.title}}</h5>
                                 <p class="card-text">{{post.snippet}}</p>
@@ -97,7 +97,7 @@
                                 {% else %}
                                     <img
                                     class="post-preview-meta-img"
-                                    src="{% static 'theblog\images\default_profile_pic.png' %}"
+                                    src="https://res.cloudinary.com/jjconway23/image/upload/v1667304953/The%20Primed%20Buyer/Media/default_profile_picture_rbxjjl.png"
                                     />
                                 {% endif %}
                                     <div class="post-preview-meta-details">

@@ -4,13 +4,18 @@
 <title>Login</title>
 {% endblock %}
 {% block content%}
-<div class="form-group">
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Submit">
-    </form>
-</div>
+<section class="bg-light py-10">
+    <div class="container px-5">
+        <div class="form-group">
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input class="btn btn-primary mx-auto mt-3" type="submit" value="Submit">
+            </form>
+        </div>
+    </div>
+</section>
+
 
 
 {% endblock %}

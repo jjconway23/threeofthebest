@@ -7,7 +7,6 @@ from django.urls import reverse_lazy, reverse
 from django.http import HttpResponseRedirect
 from django.core.paginator import Paginator
 import random
-from django.http import HttpResponse
 
 def ListHomeView(request):
     posts = Post.objects.all().order_by('-id')
