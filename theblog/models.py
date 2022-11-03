@@ -7,7 +7,7 @@ from django.db.models import UniqueConstraint, Q
 from cloudinary.models import CloudinaryField
 
 class WinningProduct(models.Model):
-    product_image = CloudinaryField("image")
+    product_image = CloudinaryField("image", null=True)
     product_name = models.CharField(max_length=255)
     product_description = models.CharField(max_length=255)
 
@@ -22,14 +22,14 @@ class WinningProduct(models.Model):
     product_price_1 = models.CharField(max_length=255, default='£')
     product_price_2 = models.CharField(max_length=255, default='£')
     product_price_3 = models.CharField(max_length=255, default='£')
-    #date_added = models.DateField(auto_now_add=True)
+    date_added = models.DateField(auto_now_add=True)
 
     def __str__(self):
         return self.product_name
 
 
 class Product(models.Model):
-    product_image = CloudinaryField("image")
+    product_image = CloudinaryField("image", null=True)
     product_name = models.CharField(max_length=255)
     product_description = models.CharField(max_length=255)
 
@@ -44,7 +44,7 @@ class Product(models.Model):
     product_price_1 = models.CharField(max_length=255, default='£')
     product_price_2 = models.CharField(max_length=255, default='£')
     product_price_3 = models.CharField(max_length=255, default='£')
-    #date_added = models.DateField(auto_now_add=True)
+    date_added = models.DateField(auto_now_add=True)
 
     def __str__(self):
         return self.product_name
@@ -76,7 +76,7 @@ class SubCategory(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
     bio = models.TextField()
-    profile_pic = CloudinaryField("image")
+    profile_pic = CloudinaryField("image", null=True)
     facebook_url = models.CharField(max_length=255, blank=True, null=True)
     twitter_url = models.CharField(max_length=255, blank=True, null=True)
     instagram_url = models.CharField(max_length=255, blank=True, null=True)
@@ -99,8 +99,8 @@ class Profile(models.Model):
 class Post(models.Model):
     title = models.CharField(max_length=255)
     title_tag = models.CharField(max_length=255, default='3oftheBest')
-    header_image = CloudinaryField("image")
-    snippet_image = CloudinaryField("image")
+    header_image = CloudinaryField("image", null=True)
+    snippet_image = CloudinaryField("image", null=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     body = models.TextField()
     post_date = models.DateField(auto_now_add=True)
@@ -111,6 +111,11 @@ class Post(models.Model):
     sub_category = models.CharField(max_length=255, default ='uncategorized')
     product = models.ManyToManyField(Product, blank=True)
     winning_product = models.ForeignKey(WinningProduct, null=True, blank=True, on_delete=models.CASCADE)
+    min_read = models.CharField(max_length=20, default="", null=True)
+    meta_keywords = models.CharField(max_length=255, default="", null=True)
+    meta_description = models.TextField(default="", null=True)
+    photo_credit = models.CharField(max_length=255, default="", null=True)
+    winner_text = models.TextField(default="", null=True)
 
 
     class Meta:

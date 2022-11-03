@@ -1,15 +1,16 @@
 {% extends 'base.html' %}
 {% load static %}
+
+{% block meta %}
+<meta name="description" content="{{post.meta_description}}">
+<meta name="keywords" content="{{post.meta_keywords}}">
+<meta name="author" content="{{ post.author.first_name|title }} {{ post.author.last_name|title }}">
+{% endblock %}
+
 {% block title%}
 <title>{{post.title_tag}}</title>
-{% comment %}
-<meta name="keywords" content="{{}}">
-see if there is a way where we can dynamically set meta tags.
-may be able to add a field to the Post model and have them looped
-thorugh and added to meta keywords. Potentially do it with the 
-description meta tag too.
-{% endcomment %}
-{% endblock %} 
+{% endblock %}
+
 {% block content%}
 <section class="bg-light py-10">
     <div class="container px-3">
@@ -40,7 +41,7 @@ description meta tag too.
                     {{ post.author.first_name|title }} {{ post.author.last_name|title }}
                 </div>
                 <div class="single-post-meta-details-date">
-                  {{post.post_date}} &middot; 6 min read
+                  {{post.post_date}} &middot; {{post.min_read}}
                 </div>
               </div>
             </div>
@@ -49,10 +50,11 @@ description meta tag too.
                       class="img-fluid mb-2 rounded"
                       src="{{ post.header_image.url }}"
                     />
-                    {% comment %}{% if post.photo_credit %}
-          <div class="small text-gray-500 text-center">
-                      Photo Credit: Unsplash
-          </div>{% endcomment %}
+          {% if post.photo_credit %}
+                <div class="small text-gray-500 text-center">
+                          Credit: {{post.photo_credit}}
+                </div>
+          {% endif %}
           <div class="small text-gray-500 text-center w-75 mx-auto">
             We sometimes use affiliate links in our content. This will not cost you something however it helps us offset the price of paying our writing team. Thanks for your continued support!
           </div>
@@ -88,7 +90,7 @@ description meta tag too.
       {% endfor %}       
     </div> 
         <h2>Primed Buyers Choice:</h2>
-        <p>Where winner text will go.</p>
+        <p>{{post.winner_text|safe}}</p>
         <br>
           <div class="col-lg-6 mb-5 mx-auto">
             <div class="card lift h-100 ">

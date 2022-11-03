@@ -6,6 +6,7 @@ class PostAdmin(admin.ModelAdmin):
     list_display = ('title', 'author', 'post_date', 'category','sub_category', 'winning_product',)
     ordering = ('-post_date',)
     search_fields = ('title','author__first_name','category', 'sub_category', 'winning_product__product_name',)
+    fields =('title', 'title_tag', 'author', ('category', 'sub_category'), 'likes', 'isFeatured', 'min_read', 'photo_credit', 'product', 'winning_product', 'meta_keywords', 'meta_description', 'snippet', 'winner_text', 'body', 'header_image', 'snippet_image'  )
 
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name',)

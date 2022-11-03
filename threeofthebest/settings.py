@@ -16,7 +16,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-q531%2sbqcri0o_&#%cb5ugfbk86w+17hdw3jfx98d1hhl@m_t'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', cast=bool)
@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'jquery',
     'cloudinary',
+    'asymmetric_jwt_auth',
+    'certbot_django.server',
     'theblog',
     'members',
 ]
@@ -52,6 +54,10 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+MIDDLEWARE_CLASSES = (
+    'asymmetric_jwt_auth.middleware.JWTAuthMiddleware',
+)
 
 ROOT_URLCONF = 'threeofthebest.urls'
 

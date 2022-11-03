@@ -11,10 +11,14 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
+    {% block meta %} {% endblock %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Bootstrap CSS -->
     <link href="{% static 'theblog\css\styles.css' %}" rel="stylesheet" />
-    <link rel="icon" type="image/x-icon" href="assets/img/favicon.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href=https://res.cloudinary.com/jjconway23/image/upload/v1667482478/The%20Primed%20Buyer/Media/Logo/Favicon/apple-touch-icon_e2ob0f.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://res.cloudinary.com/jjconway23/image/upload/v1667482478/The%20Primed%20Buyer/Media/Logo/Favicon/favicon-32x32_o73ict.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://res.cloudinary.com/jjconway23/image/upload/v1667482479/The%20Primed%20Buyer/Media/Logo/Favicon/favicon-16x16_l1q3tw.png">
+    <link rel="manifest" href="https://res.cloudinary.com/jjconway23/raw/upload/v1667482478/The%20Primed%20Buyer/Media/Logo/Favicon/site_af5luv.webmanifest">
     <script
       data-search-pseudo-elements
       defer
@@ -25,8 +29,17 @@
       src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.24.1/feather.min.js"
       crossorigin="anonymous"
     ></script>
-
     {% block title%} {% endblock %}
+    <style>
+     @media only screen and (max-width: 326px){
+      .navbar-brand{
+        margin: 0 auto;
+      }
+      .navbar-toggler{
+        margin: 0 auto;
+      }
+     }
+    </style>
   </head>
   <body>
     <div id="layoutDefault">
@@ -37,7 +50,7 @@
           >
             <div class="container px-5">
               <a class="navbar-brand text-dark" href="{% url 'home' %}"
-                ><img style="width:auto; height:auto" alt="company-logo" src="https://res.cloudinary.com/jjconway23/image/upload/v1667302962/The%20Primed%20Buyer/Media/Logo/The_Primed_Buyer_resize_tpkizj.png"></a
+                ><img style="width:auto; height:auto" alt="company-logo" src="https://res.cloudinary.com/jjconway23/image/upload/v1667493196/The%20Primed%20Buyer/Media/Logo/rsz_250transparent_ny5m9n.png"></a
               >
               <button
                 class="navbar-toggler"
@@ -295,19 +308,19 @@
                   <div class="footer-brand">The Primed  Buyer</div>
                   <div class="mb-3">Making the product hunt easy.</div>
                   <div class="icon-list-social mb-5">
-                    <a class="icon-list-social-link" href="#!"
+                    <a target="_blank" class="icon-list-social-link" href="https://www.instagram.com/theprimedbuyer/"
                       ><i class="fab fa-instagram"></i
                     ></a>
-                    <a class="icon-list-social-link" href="#!"
+                    <a target="_blank" class="icon-list-social-link" href="https://twitter.com/theprimedbuyer/"
                       ><i class="fab fa-twitter"></i
                     ></a>
-                    <a class="icon-list-social-link" href="#!"
+                    <a target="_blank" class="icon-list-social-link" href="https://www.facebook.com/profile.php?id=100087467410698"
                       ><i class="fab fa-facebook"></i
                     ></a>
-                    <a class="icon-list-social-link" href="#!"
+                    <a target="_blank" class="icon-list-social-link" href="https://www.tiktok.com/@theprimedbuyer?_t=8X3KGPgiGyT&_r=1"
                       ><i class="fab fa-tiktok"></i
                     ></a>
-                    <a class="icon-list-social-link" href="#!"
+                    <a target="_blank" class="icon-list-social-link" href="https://www.youtube.com/channel/UCUj9DujR1yO3olVnhdpe8aQ/featured"
                       ><i class="fab fa-youtube"></i
                     ></a>
                   </div>
