@@ -7,6 +7,9 @@ from django.urls import reverse_lazy, reverse
 from django.http import HttpResponseRedirect
 from django.core.paginator import Paginator
 import random
+from decouple import config
+from django.core.mail import send_mail
+
 
 def ListHomeView(request):
     posts = Post.objects.all().order_by('-id')
@@ -14,13 +17,11 @@ def ListHomeView(request):
     sub_cats = SubCategory.objects.all()
     comments = Comment.objects.all()
     home_comments = random.choices(comments, k=5)
-    url = 'https://theprimedbuyer.us21.list-manage.com/subscribe/post?u=01d2f3275dc6b906deb0bcb91&amp;id=fc6c622ffa&amp;f_id=00fcc1e1f0'
     return render(request, 'home.html', {
             'posts':posts,
             'cat_menu': cat_menu,
             'sub_cats': sub_cats,
             'home_comments': home_comments,
-            'url': url
         })
 
 def ListAllPostsView(request):
@@ -188,4 +189,19 @@ def privacy_policy(request):
     return render(request, 'privacy_policy.html')
 
 def contact_us(request):
-    return render(request, 'contact_us.html')
+    if request.method == "POST":
+        contact_full_name = request.POST['contact-full-name']
+        contact_email = request.POST['contact-email']
+        contact_message = request.POST['contact-message']
+        to = config('USER_EMAIL')
+
+        send_mail(
+            'Support Query from {}'.format(contact_full_name),
+            contact_message + " Email sent by {}".format(contact_email),
+            contact_email,
+            [to],
+        )
+        return render(request, 'home.html', {'contact_full_name': contact_full_name})
+    
+    else:
+        return render(request, 'contact_us.html')

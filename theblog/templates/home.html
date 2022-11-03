@@ -170,9 +170,10 @@
           <div class="col-lg-6">
             <!-- Begin Mailchimp Signup Form -->
               <form
-                action="{{url}}"
+                action="http://theprimedbuyer.us21.list-manage.com/subscribe/post-json?u=01d2f3275dc6b906deb0bcb91&amp;id=fc6c622ffa&amp;f_id=00fcc1e1f0"
                 method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate"
                 target="_blank">
+                <div id="subscribe-result"></div>
                 <div id="mc_embed_signup_scroll">
                   <div class="mc-field-group">
                     <label for="mce-FNAME" hidden>Full Name <span class="asterisk">*</span>
@@ -220,5 +221,8 @@
       </svg>
     </div>
 </section>
+<script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="{% static 'theblog\js\jquery.js' %}"></script>
+
 
 {% endblock %}

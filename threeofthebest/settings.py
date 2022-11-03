@@ -5,8 +5,8 @@ import cloudinary.uploader
 import cloudinary.api
 from decouple import config
 
-if os.path.isfile('env.py'):
-    import env
+
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'jquery',
     'cloudinary',
     'theblog',
     'members',
@@ -143,9 +144,18 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
 
+#Cloudinary
 
 cloudinary.config(
     cloud_name = config('CLOUD_NAME'),
     api_key = config('API_KEY', cast=int),
     api_secret = config('API_SECRET')
 )
+
+#Send Email
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = config('USER_EMAIL')
+EMAIL_HOST_PASSWORD = config('USER_PASSWORD')

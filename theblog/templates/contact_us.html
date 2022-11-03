@@ -21,22 +21,43 @@
     <div class="container px-5">
         <div class="row gx-5 justify-content-center">
             <div class="col-lg-9">
-                <form>
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    {% if contact_full_name %}
+                        <div id="contact-success-message" class="p-2 bg-success text-light rounded mb-2">Thanks for your message {{contact_full_name}}! Someone will be in touch soon.</div>
+                        <div class="row gx-5 mb-4">
+                            <div class="col-md-6">
+                                <label class="text-dark mb-2" for="inputName">Name</label>
+                                <input class="form-control py-4" id="inputName" type="text" placeholder="Full name" name="contact-full-name">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="text-dark mb-2" for="inputEmail">Email</label>
+                                <input class="form-control py-4" id="inputEmail" type="email" placeholder="name@example.com" name="contact-email">
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label class="text-dark mb-2" for="inputMessage">Message</label>
+                            <textarea class="form-control py-3" id="inputMessage" type="text" placeholder="Enter your message..." rows="4" name="contact-message"></textarea>
+                        </div>
+                        <div class="text-center"><button class="btn btn-primary mt-4" type="submit">Submit Request</button></div>
+                    {% else %}
+                    
                     <div class="row gx-5 mb-4">
                         <div class="col-md-6">
-                            <label class="text-dark mb-2" for="inputName">Full name</label>
-                            <input class="form-control py-4" id="inputName" type="text" placeholder="Full name">
+                            <label class="text-dark mb-2" for="inputName">Name</label>
+                            <input class="form-control py-4" id="inputName" type="text" placeholder="Full name" name="contact-full-name">
                         </div>
                         <div class="col-md-6">
                             <label class="text-dark mb-2" for="inputEmail">Email</label>
-                            <input class="form-control py-4" id="inputEmail" type="email" placeholder="name@example.com">
+                            <input class="form-control py-4" id="inputEmail" type="email" placeholder="name@example.com" name="contact-email">
                         </div>
                     </div>
                     <div class="mb-4">
                         <label class="text-dark mb-2" for="inputMessage">Message</label>
-                        <textarea class="form-control py-3" id="inputMessage" type="text" placeholder="Enter your message..." rows="4"></textarea>
+                        <textarea class="form-control py-3" id="inputMessage" type="text" placeholder="Enter your message..." rows="4" name="contact-message"></textarea>
                     </div>
                     <div class="text-center"><button class="btn btn-primary mt-4" type="submit">Submit Request</button></div>
+                    {% endif %}
                 </form>
             </div>
         </div>
@@ -55,4 +76,12 @@
         </div>
     </div>
 </section>
+<script>
+    let contactMessage = document.querySelector("#contact-success-message");
+    if(contactMessage){
+        setTimeout(()=>{
+            contactMessage.style.display ="none"
+        },120000)
+    }
+</script>
 {% endblock %}
