@@ -11,12 +11,11 @@
 <style>
   .affiliate-product-image{
     
-    background-size: 80%; 
+    background-size: 60vw; 
     text-indent: -99999999px;
     background-repeat: no-repeat;
-    height: 40vh;
+    height: 60vh;
   }
-  
   @media only screen and (max-width: 600px){
     .affiliate-product-btns{
       display: flex;
@@ -26,17 +25,7 @@
     .affiliate-product-btns a {
       margin-bottom: 3%;
     }
-    .affiliate-product-image{
-      height: 44vh;
-    }
-    
   }
-  @media only screen and (max-width: 425px){
-    .affiliate-product-image{
-      height: 26vh;
-    }
-  }
- 
     
   
 
@@ -84,7 +73,7 @@
                       src="{{ post.header_image.url }}"
                     />
           {% if post.photo_credit %}
-                <div class="small text-gray-500 text-center my-2">
+                <div class="small text-gray-500 text-center">
                           Credit: {{post.photo_credit}}
                 </div>
           {% endif %}
@@ -94,16 +83,17 @@
 
           <div class="single-post-text my-5">
             {{post.body| safe}}
+            <hr class="my-5" />
             {% for product in post.product.all %}
             <div>
               {% if product.product_name %}
-                <a target='_blank' href="{{product.product_url_1}}"><h2 class="card-title mb-2">{{product.product_name}}</h2></a>
+                <a target='_blank' href="{{product.product_url_1}}"><h4 class="card-title mb-2">{{product.product_name}}</h4></a>
               {% endif %}
               {% if product.product_image %}
-                <div class="affiliate-product-image"style="background-image: url('{{ product.product_image.url}}');">picture of {{product.product_name}}</div>
+                <div class="affiliate-product-image"style="background-image: url('{{ product.product_image.url}}');"></div>
               {% endif %}
               {% if product.product_description %}
-                <div class="card-text">{{product.product_description|safe}}</div>
+                <p class="card-text">{{product.product_description}}</p>
               {% endif %}
               <div class="affiliate-product-btns">
                   {% if product.product_seller_1 %}
@@ -123,16 +113,101 @@
                   {% endif %}
               </div>
             </div>
-            <hr class="my-5" />
             {% endfor %}
-            {% if post.winner_text %}
-              <div>
-                {{post.winner_text|safe}}
-              </div>
-              {% endif %}
             
           </div>
+          {% comment %}
+          
+          {% if post.winning_product %}
+      <div class="row">
+      {% for product in post.product.all %}
+        <div class="col-md-8 mx-md-auto col-lg-4 mb-5 ">
+          <div class="card lift h-100">
+              <img class="card-img-top img-fluid" src="{{ product.product_image.url}}" alt="picture of {{product.product_name}}">
+              <div class="card-body">
+              </div>
+              <div class="card-footer bg-transparent border-top d-flex align-items-center justify-content-between">
+                <div class="small text-primary">{{product.product_seller_1|title}}</div>
+                <div class="d-flex align-items-center"><h5 style="display: inline; margin-right:5px">{{product.product_price_1}}</h5><div class="small text-primary"  style="display: inline;"><svg  style="display: inline;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div></div>
+            </div></a>
+              <a target='_blank' href="{{product.product_url_2}}"><div class="card-footer bg-transparent border-top d-flex align-items-center justify-content-between">
+                <div class="small text-primary">{{product.product_seller_2|title}}</div>
+                <div class="d-flex align-items-center"><h5 style="display: inline; margin-right:5px">{{product.product_price_2}}</h5><div class="small text-primary"  style="display: inline;"><svg  style="display: inline;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div></div>
+            </div></a>
+            <a target='_blank' href="{{product.product_url_3}}"><div class="card-footer bg-transparent border-top d-flex align-items-center justify-content-between">
+              <div class="small text-primary">{{product.product_seller_3|title}}</div>
+              <div class="d-flex align-items-center"><h5 style="display: inline; margin-right:5px">{{product.product_price_3}}</h5><div class="small text-primary"  style="display: inline;"><svg  style="display: inline;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div></div>
+          </div></a>
+          </div>
+        </div>
+      
+      {% endfor %}       
+    </div> 
+        <p>{{post.winner_text|safe}}</p>
+        <br>
+        {% if post.winning_product %}
+          <div class="col-lg-6 mb-5 mx-auto">
+            <div class="card lift h-100 ">
+              
+                <img class="card-img-top img-fluid" src="{{ post.winning_product.product_image.url}}" alt="winning product picture">
+                <div class="card-body">
+                  <h4 class="card-title mb-2">{{post.winning_product.product_name}}</h4>
+                  <p class="card-text">{{post.winning_product.product_description}}</p>
+                
+              
+                <a target='_blank' href="{{post.winning_product.product_url_1}}">
+                  <div class="card-footer bg-transparent border-top d-flex align-items-center justify-content-between">
+                    <div class="small text-primary">{{post.winning_product.product_seller_1|title}}</div>
+                    <div class="d-flex align-items-center">
+                      <h5 style="display: inline; margin-right:5px">{{post.winning_product.product_price_1}}</h5>
+                      <div class="small text-primary" style="display: inline;"><svg style="display: inline;"
+                          xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                          class="feather feather-arrow-right">
+                          <line x1="5" y1="12" x2="19" y2="12"></line>
+                          <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg></div>
+                    </div>
+                  </div>
+                </a>
+                <a target='_blank' href="{{post.winning_product.product_url_2}}">
+                  <div class="card-footer bg-transparent border-top d-flex align-items-center justify-content-between">
+                    <div class="small text-primary">{{post.winning_product.product_seller_2|title}}</div>
+                    <div class="d-flex align-items-center">
+                      <h5 style="display: inline; margin-right:5px">{{post.winning_product.product_price_2}}</h5>
+                      <div class="small text-primary" style="display: inline;"><svg style="display: inline;"
+                          xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                          class="feather feather-arrow-right">
+                          <line x1="5" y1="12" x2="19" y2="12"></line>
+                          <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg></div>
+                    </div>
+                  </div>
+                </a>
+                <a target='_blank' href="{{post.winning_product.product_url_3}}">
+                  <div class="card-footer bg-transparent border-top d-flex align-items-center justify-content-between">
+                    <div class="small text-primary">{{post.winning_product.product_seller_3|title}}</div>
+                    <div class="d-flex align-items-center">
+                      <h5 style="display: inline; margin-right:5px">{{post.winning_product.product_price_3}}</h5>
+                      <div class="small text-primary" style="display: inline;"><svg style="display: inline;"
+                          xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                          class="feather feather-arrow-right">
+                          <line x1="5" y1="12" x2="19" y2="12"></line>
+                          <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg></div>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </div>
+            {% endif %}
+            {% endif %}
+          {% endcomment %}
+
 <br><br>
+        
 <div class="col-sm-12 mx-auto mt-5">
     <div class="card card-team">
         <div class="card-body">

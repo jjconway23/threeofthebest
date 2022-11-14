@@ -31,6 +31,14 @@
     ></script>
     {% block title%} {% endblock %}
     <style>
+      #primed-logo{
+        background-image: url("https://res.cloudinary.com/jjconway23/image/upload/v1667493196/The%20Primed%20Buyer/Media/Logo/rsz_250transparent_ny5m9n.png");
+        background-size: 100% 100%; 
+        text-indent: -99999999px;
+        background-repeat: no-repeat;
+        height: 180px;
+        width: 180px;
+      }
      @media only screen and (max-width: 326px){
       .navbar-brand{
         margin: 0 auto;
@@ -39,6 +47,12 @@
         margin: 0 auto;
       }
      }
+     @media only screen and (max-width: 768px){
+      #myBtn {
+        right: 8px;
+        bottom: 10px;
+     }
+    }
     </style>
   </head>
   <body>
@@ -50,8 +64,9 @@
           >
             <div class="container px-5">
               <a class="navbar-brand text-dark" href="{% url 'home' %}"
-                ><img style="width:auto; height:auto" alt="company-logo" src="https://res.cloudinary.com/jjconway23/image/upload/v1667493196/The%20Primed%20Buyer/Media/Logo/rsz_250transparent_ny5m9n.png"></a
-              >
+                >
+                <div id="primed-logo"></div>
+                </a>
               <button
                 class="navbar-toggler"
                 type="button"
@@ -294,11 +309,14 @@
                   <i class="ms-2" data-feather="arrow-right"></i>
                 </a>
                 {% endif %}
+                
               </div>
             </div>
           </nav>
     {% block content%} {% endblock %}
-
+    <!-- <div onclick="topFunction()" id="myBtn" title="Go to top">
+      <i class="fa-solid fa-angle-up"></i>
+    </div> -->
         </main>
         <div id="layoutDefault_footer">
           <footer class="footer pt-10 pb-5 mt-auto bg-dark footer-dark">
@@ -314,7 +332,7 @@
                     <a target="_blank" class="icon-list-social-link" href="https://twitter.com/theprimedbuyer/"
                       ><i class="fab fa-twitter"></i
                     ></a>
-                    <a target="_blank" class="icon-list-social-link" href="https://www.facebook.com/profile.php?id=100087467410698"
+                    <a target="_blank" class="icon-list-social-link" href="https://www.facebook.com/profile.php?id=100087564255241"
                       ><i class="fab fa-facebook"></i
                     ></a>
                     <a target="_blank" class="icon-list-social-link" href="https://www.tiktok.com/@theprimedbuyer?_t=8X3KGPgiGyT&_r=1"

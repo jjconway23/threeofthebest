@@ -15,13 +15,13 @@ def ListHomeView(request):
     posts = Post.objects.all().order_by('-id')
     cat_menu = Category.objects.all()
     sub_cats = SubCategory.objects.all()
-    comments = Comment.objects.all()
-    home_comments = random.choices(comments, k=5)
+    #comments = Comment.objects.all()
+    #home_comments = random.choices(comments, k=5)
     return render(request, 'home.html', {
             'posts':posts,
             'cat_menu': cat_menu,
             'sub_cats': sub_cats,
-            'home_comments': home_comments,
+            #'home_comments': home_comments,
         })
 
 def ListAllPostsView(request):
